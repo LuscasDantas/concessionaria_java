@@ -152,7 +152,8 @@ public class FormLogin extends JFrame {
 			FormPrincipal.mnRelatorio.setVisible(true);
 			FormPrincipal.mnBackup.setVisible(true);
 		} else {
-			System.out.println("Usuário ou senha errado!");
+			//System.out.println("Usuário ou senha errado!");
+			JOptionPane.showMessageDialog(null, "Usuário ou senha errado");
 			txtUserName.setText("");
 			passwordField.setText("");
 		}
