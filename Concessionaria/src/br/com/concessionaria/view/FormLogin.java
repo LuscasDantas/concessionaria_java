@@ -145,7 +145,7 @@ public class FormLogin extends JFrame {
 			FormPrincipal.mnBackup.setVisible(false);
 		}
 
-		if (txtUserName.getText().equals("ADMIN") && (senhaout.equals(Corp))) {
+		else if (txtUserName.getText().equals("ADMIN") && (senhaout.equals(Corp))) {
 			FormPrincipal principal = new FormPrincipal();
 			principal.setVisible(true);
 			FormPrincipal.mnCadastro.setVisible(true);
