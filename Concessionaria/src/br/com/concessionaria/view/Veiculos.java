@@ -39,7 +39,7 @@ public class Veiculos extends JPanel {
 		this.add(lblIdVeiculo);
 		
 		JTextField txtIdVeiculo = new JTextField();
-		txtIdVeiculo.setBounds(64, 69, 38, 20);
+		txtIdVeiculo.setBounds(64, 70, 38, 20);
 		this.add(txtIdVeiculo);
 		txtIdVeiculo.setColumns(10);
 		
