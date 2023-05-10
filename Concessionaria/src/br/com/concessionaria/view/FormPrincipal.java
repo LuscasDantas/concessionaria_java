@@ -104,6 +104,15 @@ public class FormPrincipal extends JFrame {
 		veiculosPanel.setVisible(false);
 		
 		/*
+		 * Painel de Serviços
+		 */
+		Servicos servicosPanel = new Servicos(geralPanel);
+		servicosPanel.setBounds(10, 11, 1004, 485);
+		geralPanel.add(servicosPanel, "servicos");
+		servicosPanel.setLayout(null);
+		servicosPanel.setVisible(false);
+		
+		/*
 		 * Painel de clientes
 		 */
 		JPanel clientesPanel = new JPanel();
@@ -125,6 +134,11 @@ public class FormPrincipal extends JFrame {
 		mnCadastro.add(mnItemColaboradores);
 		
 		JMenuItem mnItemServicos = new JMenuItem("Serviços");
+		mnItemServicos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(geralPanel, "servicos");
+			}
+		});
 		mnCadastro.add(mnItemServicos);
 		
 		JMenuItem mnItemVeiculos = new JMenuItem("Veículos");
