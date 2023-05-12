@@ -1,10 +1,9 @@
 package br.com.concessionaria.model;
 
-import br.com.concessionaria.view.FormPrincipal;
-import br.com.concessionaria.view.Veiculos;
+import br.com.concessionaria.view.FormVeiculos;
 
 public class Veiculo {
-	
+
 	private static int idVeiculo = 0;
 	private static double valor = 0;
 	private static String modelo = "";
@@ -12,27 +11,39 @@ public class Veiculo {
 	private static String cor = "";
 	private static String placa = "";
 	private static String ano = "";
-	
-	public Veiculo() {
+
+	public Veiculo(int idVeiculo, double valor, String modelo, String chassi, String cor, String placa, String ano) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.idVeiculo = idVeiculo;
+		this.modelo = modelo;
+		this.chassi = chassi;
+		this.cor = cor;
+		this.placa = placa;
+		this.ano = ano;
+		this.valor = valor;
 	}
-	
-	
-	public void CadastrarVeiculo() {
+
+	public Veiculo() {
 
 	}
 
+	public void cadastrarVeiculo() {
+		Veiculo veiculo = new Veiculo();
+		veiculo.setModelo(FormVeiculos.txtModelo.getText());
+		veiculo.setChassi(FormVeiculos.txtChassi.getText());
+		veiculo.setCor(FormVeiculos.txtCor.getText());
+		veiculo.setPlaca(FormVeiculos.txtPlaca.getText());
+		veiculo.setAno(FormVeiculos.txtAno.getText());
+		veiculo.setValor((double) FormVeiculos.txtValor.getValue());
+	}
 
 	public static int getIdVeiculo() {
 		return idVeiculo;
 	}
 
-
 	public static void setIdVeiculo(int idVeiculo) {
 		Veiculo.idVeiculo = idVeiculo;
 	}
-
 
 	public static double getValor() {
 		return valor;
@@ -80,12 +91,6 @@ public class Veiculo {
 
 	public static void setAno(String ano) {
 		Veiculo.ano = ano;
-	}
-
-	@Override
-	public String toString() {
-		return "Veiculo [getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
 	}
 
 }
