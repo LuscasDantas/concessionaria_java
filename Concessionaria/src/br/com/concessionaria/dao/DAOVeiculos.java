@@ -26,8 +26,8 @@ public class DAOVeiculos {
 
 			Connection con = null;
 			try {
-				Class.forName("");
-				con = DriverManager.getConnection("");
+				Class.forName("org.sqlite.JDBC");
+				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 				con.setAutoCommit(false);
 				String query = "INSERT INTO VEICULO (ID, MODELO, CHASSI, COR, PLACA, ANO, VALOR)"
 						+ "VALUES (NULL, ?,?,?,?,?,?)";
