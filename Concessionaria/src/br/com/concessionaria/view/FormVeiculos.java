@@ -98,11 +98,8 @@ public class FormVeiculos extends JPanel {
 		lblValor.setBounds(39, 266, 45, 14);
 		this.add(lblValor);
 		
-<<<<<<< HEAD
 		txtValor = new JTextField();
-=======
 		txtValor = new JFormattedTextField();
->>>>>>> e1d8f04d8bce4151f7edce43278aa4cbaf57d391
 		txtValor.setBounds(87, 263, 160, 20);
 		this.add(txtValor);
 		txtValor.setColumns(10);
