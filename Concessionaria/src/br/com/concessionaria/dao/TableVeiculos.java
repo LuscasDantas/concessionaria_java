@@ -15,10 +15,10 @@ public class TableVeiculos {
 			
 			stmt = con.createStatement();
 			String sql = "CREATE TABLE VEICULOS " + ""
-					+ "(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
-					+ "MODELO VARCHAR(30), " + "CHASSI VARCHAR(30), " 
-					+ "COR VARCHAR(30), " + "PLACA VARCHAR(10) NOT NULL, "
-					+ "ANO VARCHAR(10), " + "VALOR DOUBLE )";
+					+ "(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ " MODELO VARCHAR(30)," + " CHASSI VARCHAR(30)," 
+					+ " COR VARCHAR(30)," + " PLACA VARCHAR(10) NOT NULL,"
+					+ " ANO VARCHAR(10)," + " VALOR DOUBLE )";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			con.close();

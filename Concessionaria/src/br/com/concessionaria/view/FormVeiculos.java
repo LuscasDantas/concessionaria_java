@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import br.com.concessionaria.model.Veiculo;
+
 public class FormVeiculos extends JPanel {
 
 	/**
@@ -27,7 +29,7 @@ public class FormVeiculos extends JPanel {
 	public static JTextField txtCor;
 	public static JTextField txtPlaca;
 	public static JTextField txtAno;
-	public static JFormattedTextField txtValor;
+	public static JTextField txtValor;
 	static JButton btnAlterar;
 	static JButton btnDeletar;
 	static JButton btnCadastrar;
@@ -50,7 +52,7 @@ public class FormVeiculos extends JPanel {
 		lblIdVeiculo.setBounds(39, 72, 15, 14);
 		this.add(lblIdVeiculo);
 		
-		JTextField txtIdVeiculo = new JTextField();
+		txtIdVeiculo = new JTextField();
 		txtIdVeiculo.setBounds(64, 70, 38, 20);
 		this.add(txtIdVeiculo);
 		txtIdVeiculo.setColumns(10);
@@ -59,7 +61,7 @@ public class FormVeiculos extends JPanel {
 		lblModelo.setBounds(32, 139, 58, 14);
 		this.add(lblModelo);
 		
-		JTextField txtModelo = new JTextField();
+		txtModelo = new JTextField();
 		txtModelo.setBounds(87, 136, 160, 20);
 		this.add(txtModelo);
 		txtModelo.setColumns(10);
@@ -69,7 +71,7 @@ public class FormVeiculos extends JPanel {
 		lblAno.setBounds(304, 205, 45, 14);
 		this.add(lblAno);
 		
-		JTextField txtAno = new JTextField();
+		txtAno = new JTextField();
 		txtAno.setBounds(355, 202, 86, 20);
 		this.add(txtAno);
 		txtAno.setColumns(10);
@@ -78,7 +80,7 @@ public class FormVeiculos extends JPanel {
 		lblCor.setBounds(39, 208, 38, 14);
 		this.add(lblCor);
 		
-		JTextField txtCor = new JTextField();
+		txtCor = new JTextField();
 		txtCor.setBounds(87, 205, 160, 20);
 		this.add(txtCor);
 		txtCor.setColumns(10);
@@ -87,7 +89,7 @@ public class FormVeiculos extends JPanel {
 		lblChassi.setBounds(304, 139, 51, 14);
 		this.add(lblChassi);
 		
-		JTextField txtChassi = new JTextField();
+		txtChassi = new JTextField();
 		txtChassi.setBounds(355, 136, 160, 20);
 		this.add(txtChassi);
 		txtChassi.setColumns(10);
@@ -96,7 +98,7 @@ public class FormVeiculos extends JPanel {
 		lblValor.setBounds(39, 266, 45, 14);
 		this.add(lblValor);
 		
-		JTextField txtValor = new JTextField();
+		txtValor = new JTextField();
 		txtValor.setBounds(87, 263, 160, 20);
 		this.add(txtValor);
 		txtValor.setColumns(10);
@@ -105,7 +107,7 @@ public class FormVeiculos extends JPanel {
 		lblPlaca.setBounds(304, 266, 51, 14);
 		this.add(lblPlaca);
 		
-		JTextField txtPlaca = new JTextField();
+		txtPlaca = new JTextField();
 		txtPlaca.setBounds(355, 263, 86, 20);
 		this.add(txtPlaca);
 		txtPlaca.setColumns(10);
@@ -114,6 +116,11 @@ public class FormVeiculos extends JPanel {
 		 * Botões
 		 */
 		JButton btnCadastrar = new JButton("CADASTRAR");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Veiculo.cadastrarVeiculo();
+			}
+		});
 		btnCadastrar.setBounds(111, 351, 110, 23);
 		this.add(btnCadastrar);
 		
