@@ -2,6 +2,10 @@ package br.com.concessionaria.model;
 
 import br.com.concessionaria.view.FormVeiculos;
 
+import java.sql.SQLException;
+
+import br.com.concessionaria.dao.DAOVeiculos;
+
 public class Veiculo {
 
 	private static int idVeiculo = 0;
@@ -27,14 +31,21 @@ public class Veiculo {
 
 	}
 
-	public void cadastrarVeiculo() {
+	public static void cadastrarVeiculo() {
 		Veiculo veiculo = new Veiculo();
 		veiculo.setModelo(FormVeiculos.txtModelo.getText());
 		veiculo.setChassi(FormVeiculos.txtChassi.getText());
 		veiculo.setCor(FormVeiculos.txtCor.getText());
 		veiculo.setPlaca(FormVeiculos.txtPlaca.getText());
 		veiculo.setAno(FormVeiculos.txtAno.getText());
-		veiculo.setValor((double) FormVeiculos.txtValor.getValue());
+		veiculo.setValor(Double.parseDouble(FormVeiculos.txtValor.getText()));
+		
+		try {
+			DAOVeiculos.cadastrarVeiculo(veiculo);
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static int getIdVeiculo() {
