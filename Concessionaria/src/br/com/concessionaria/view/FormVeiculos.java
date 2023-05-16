@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import br.com.concessionaria.dao.DAOVeiculos;
 import br.com.concessionaria.model.Veiculo;
 
 public class FormVeiculos extends JPanel {
@@ -29,7 +30,7 @@ public class FormVeiculos extends JPanel {
 	public static JTextField txtCor;
 	public static JTextField txtPlaca;
 	public static JTextField txtAno;
-	public static JTextField txtValor;
+	public static JFormattedTextField txtValor;
 	static JButton btnAlterar;
 	static JButton btnDeletar;
 	static JButton btnCadastrar;
@@ -98,7 +99,6 @@ public class FormVeiculos extends JPanel {
 		lblValor.setBounds(39, 266, 45, 14);
 		this.add(lblValor);
 		
-		txtValor = new JTextField();
 		txtValor = new JFormattedTextField();
 		txtValor.setBounds(87, 263, 160, 20);
 		this.add(txtValor);
@@ -126,6 +126,11 @@ public class FormVeiculos extends JPanel {
 		this.add(btnCadastrar);
 		
 		JButton btnPesquisar = new JButton("PESQUISAR");
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOVeiculos.pesquisarVeiculo();
+			}
+		});
 		btnPesquisar.setBounds(351, 351, 110, 23);
 		this.add(btnPesquisar);
 		

@@ -52,24 +52,33 @@ public class DAOVeiculos {
 	/*
 	 * Pesquisar
 	 */
-	public static void pesquisarVeiculo(Veiculo veiculo) {
+	public static void pesquisarVeiculo() {
 		Connection con = null;
 		Statement stmt = null;
 		try {
-			Class.forName("");
-			con = DriverManager.getConnection("");
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 			con.setAutoCommit(false);
 			System.out.println("Banco de dados aberto com sucesso");
 			stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM VEICULO WHERE PLACA =" + FormVeiculos.txtPlaca.getText() + ";");
+					.executeQuery("SELECT * FROM VEICULOS WHERE PLACA =" + FormVeiculos.txtPlaca.getText() + ";");
 			while (rs.next()) {
+				int id = rs.getInt("idVeiculo");
 				String modelo = rs.getString("modelo");
 				String chassi = rs.getString("chassi");
 				String cor = rs.getString("cor");
 				String placa = rs.getString("placa");
 				String ano = rs.getString("ano");
 				double valor = rs.getDouble("valor");
+				
+				//FormVeiculos.txtIdVeiculo.setText(idVeiculo);
+				FormVeiculos.txtModelo.setText(modelo);
+				FormVeiculos.txtChassi.setText(chassi);
+				FormVeiculos.txtCor.setText(cor);
+				//FormVeiculos.txtAno.setText(placa);
+				FormVeiculos.txtPlaca.setText(ano);
+				FormVeiculos.txtValor.setText(Double.toString(valor));
 			}
 			rs.close();
 			stmt.close();
@@ -98,7 +107,7 @@ public class DAOVeiculos {
 				con = DriverManager.getConnection("");
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				String query = "DELETE from PESSOA WHERE ID=" + FormVeiculos.txtIdVeiculo.getText() + ";";
+				String query = "DELETE from VEICULOS WHERE ID=" + FormVeiculos.txtIdVeiculo.getText() + ";";
 				stmt.executeUpdate(query);
 				con.commit();
 				stmt.close();
