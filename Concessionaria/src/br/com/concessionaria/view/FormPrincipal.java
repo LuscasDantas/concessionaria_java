@@ -97,7 +97,7 @@ public class FormPrincipal extends JFrame {
 		/*
 		 * Painel de veículos
 		 */
-		Veiculos veiculosPanel = new Veiculos();
+		FormVeiculos veiculosPanel = new FormVeiculos();
 		veiculosPanel.setBounds(10, 11, 1004, 485);
 		geralPanel.add(veiculosPanel, "veiculos");
 		veiculosPanel.setLayout(null);
