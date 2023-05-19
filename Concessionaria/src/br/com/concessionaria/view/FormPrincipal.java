@@ -8,25 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import java.awt.ComponentOrientation;
-import javax.swing.JTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import java.awt.Dimension;
-import javax.swing.SwingConstants;
-import java.awt.Component;
-import javax.swing.JTabbedPane;
 import javax.swing.JMenuItem;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Font;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.Label;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
 import java.awt.CardLayout;
 
 public class FormPrincipal extends JFrame {
@@ -97,7 +84,7 @@ public class FormPrincipal extends JFrame {
 		/*
 		 * Painel de veículos
 		 */
-		Veiculos veiculosPanel = new Veiculos();
+		FormVeiculos veiculosPanel = new FormVeiculos();
 		veiculosPanel.setBounds(10, 11, 1004, 485);
 		geralPanel.add(veiculosPanel, "veiculos");
 		veiculosPanel.setLayout(null);
