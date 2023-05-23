@@ -18,7 +18,12 @@ public class TableVeiculos {
 					+ "(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
 					+ " MODELO VARCHAR(30)," + " CHASSI VARCHAR(30)," 
 					+ " COR VARCHAR(30)," + " PLACA VARCHAR(10) NOT NULL,"
-					+ " ANO VARCHAR(10)," + " VALOR DOUBLE )";
+					+ " ANO VARCHAR(10)," + " VALOR DOUBLE ); "
+					+ "CREATE TABLE COLABORADORES "+ ""
+					+ "(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ " NOME VARCHAR(70)," + " CPF VARCHAR(11),"
+				    + " ENDERECO VARCHAR(50), " + " TELEFONE VARCHAR(11)," 
+					+ " CARGO VARCHAR(15));";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			con.close();
