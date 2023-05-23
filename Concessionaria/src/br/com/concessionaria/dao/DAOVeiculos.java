@@ -62,9 +62,9 @@ public class DAOVeiculos {
 			System.out.println("Banco de dados aberto com sucesso");
 			stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM VEICULOS WHERE PLACA =" + FormVeiculos.txtPlaca.getText() + ";");
+					.executeQuery("SELECT * FROM VEICULOS WHERE ID =" + FormVeiculos.txtIdVeiculo.getText() + ";");
 			while (rs.next()) {
-				int id = rs.getInt("idVeiculo");
+				//Integer idVeiculo = rs.getInt("idVeiculo");
 				String modelo = rs.getString("modelo");
 				String chassi = rs.getString("chassi");
 				String cor = rs.getString("cor");
@@ -72,11 +72,11 @@ public class DAOVeiculos {
 				String ano = rs.getString("ano");
 				double valor = rs.getDouble("valor");
 				
-				//FormVeiculos.txtIdVeiculo.setText(idVeiculo);
+				//FormVeiculos.txtIdVeiculo.setText(idVeiculo.toString());
 				FormVeiculos.txtModelo.setText(modelo);
 				FormVeiculos.txtChassi.setText(chassi);
 				FormVeiculos.txtCor.setText(cor);
-				//FormVeiculos.txtAno.setText(placa);
+				FormVeiculos.txtAno.setText(placa);
 				FormVeiculos.txtPlaca.setText(ano);
 				FormVeiculos.txtValor.setText(Double.toString(valor));
 			}
