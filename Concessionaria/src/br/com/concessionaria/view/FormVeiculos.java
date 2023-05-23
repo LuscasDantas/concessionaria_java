@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import br.com.concessionaria.dao.DAOVeiculos;
 import br.com.concessionaria.model.Veiculo;
 
 public class FormVeiculos extends JPanel {
@@ -125,6 +126,11 @@ public class FormVeiculos extends JPanel {
 		this.add(btnCadastrar);
 		
 		JButton btnPesquisar = new JButton("PESQUISAR");
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOVeiculos.pesquisarVeiculo();
+			}
+		});
 		btnPesquisar.setBounds(351, 351, 110, 23);
 		this.add(btnPesquisar);
 		

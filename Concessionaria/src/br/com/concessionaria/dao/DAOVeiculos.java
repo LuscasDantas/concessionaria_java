@@ -29,7 +29,7 @@ public class DAOVeiculos {
 				Class.forName("org.sqlite.JDBC");
 				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 				con.setAutoCommit(false);
-				String query = "INSERT INTO VEICULO (ID, MODELO, CHASSI, COR, PLACA, ANO, VALOR)"
+				String query = "INSERT INTO VEICULOS (ID, MODELO, CHASSI, COR, PLACA, ANO, VALOR)"
 						+ "VALUES (NULL, ?,?,?,?,?,?)";
 				PreparedStatement stmt = con.prepareStatement(query);
 				stmt.setString(1, Veiculo.getModelo());
@@ -42,55 +42,64 @@ public class DAOVeiculos {
 				stmt.close();
 				con.commit();
 				con.close();
-				
+
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	/*
 	 * Pesquisar
 	 */
-	public static void pesquisarVeiculo(Veiculo veiculo) {
+	public static void pesquisarVeiculo() {
 		Connection con = null;
 		Statement stmt = null;
 		try {
-			Class.forName("");
-			con = DriverManager.getConnection("");
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 			con.setAutoCommit(false);
 			System.out.println("Banco de dados aberto com sucesso");
 			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM VEICULO WHERE PLACA ="
-					+ FormVeiculos.txtPlaca.getText() + ";");
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM VEICULOS WHERE ID =" + FormVeiculos.txtIdVeiculo.getText() + ";");
 			while (rs.next()) {
+				//Integer idVeiculo = rs.getInt("idVeiculo");
 				String modelo = rs.getString("modelo");
 				String chassi = rs.getString("chassi");
 				String cor = rs.getString("cor");
 				String placa = rs.getString("placa");
 				String ano = rs.getString("ano");
 				double valor = rs.getDouble("valor");
+				
+				//FormVeiculos.txtIdVeiculo.setText(idVeiculo.toString());
+				FormVeiculos.txtModelo.setText(modelo);
+				FormVeiculos.txtChassi.setText(chassi);
+				FormVeiculos.txtCor.setText(cor);
+				FormVeiculos.txtAno.setText(placa);
+				FormVeiculos.txtPlaca.setText(ano);
+				FormVeiculos.txtValor.setText(Double.toString(valor));
 			}
 			rs.close();
 			stmt.close();
 			con.close();
-			
+
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Dialog", JOptionPane.ERROR_MESSAGE);
-			
+
 		}
 	}
-	
+
 	/*
 	 * Deletar
 	 */
 	public static void deletarVeiculo() {
-		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o registro?",
-				"Confirmar", JOptionPane.YES_NO_OPTION);
-		
-		if(response == JOptionPane.NO_OPTION) {
+		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o registro?", "Confirmar",
+				JOptionPane.YES_NO_OPTION);
+
+		if (response == JOptionPane.NO_OPTION) {
 			JOptionPane.getDefaultLocale();
-		}else if(response == JOptionPane.YES_OPTION) {
+		} else if (response == JOptionPane.YES_OPTION) {
 			Connection con = null;
 			Statement stmt = null;
 			try {
@@ -98,18 +107,18 @@ public class DAOVeiculos {
 				con = DriverManager.getConnection("");
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				String query = "DELETE from PESSOA WHERE ID=" + FormVeiculos.txtIdVeiculo.getText()	+ ";";
+				String query = "DELETE from VEICULOS WHERE ID=" + FormVeiculos.txtIdVeiculo.getText() + ";";
 				stmt.executeUpdate(query);
 				con.commit();
 				stmt.close();
 				con.close();
-				
+
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", 
-						"Atenção", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Atenção",
+						JOptionPane.ERROR_MESSAGE);
 			}
 			System.out.println("Registro Deletado com sucesso!");
 		}
-		
+
 	}
 }

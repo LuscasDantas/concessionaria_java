@@ -1,9 +1,10 @@
 package br.com.concessionaria.model;
 
+import br.com.concessionaria.view.FormVeiculos;
+
 import java.sql.SQLException;
 
 import br.com.concessionaria.dao.DAOVeiculos;
-import br.com.concessionaria.view.FormVeiculos;
 
 public class Veiculo {
 
@@ -41,8 +42,8 @@ public class Veiculo {
 		
 		try {
 			DAOVeiculos.cadastrarVeiculo(veiculo);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
+		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
