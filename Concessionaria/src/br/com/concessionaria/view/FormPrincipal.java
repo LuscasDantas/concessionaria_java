@@ -93,7 +93,7 @@ public class FormPrincipal extends JFrame {
 		/*
 		 * Painel de Serviços
 		 */
-		Servicos servicosPanel = new Servicos(geralPanel);
+		FormServicos servicosPanel = new FormServicos();
 		servicosPanel.setBounds(10, 11, 1004, 485);
 		geralPanel.add(servicosPanel, "servicos");
 		servicosPanel.setLayout(null);
