@@ -2,6 +2,7 @@
  *  @authors Lucas e Andrez
 */
 package br.com.concessionaria.view;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,7 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
 
 public class FormPrincipal extends JFrame {
-	
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
@@ -42,28 +43,28 @@ public class FormPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormPrincipal() {    
+	public FormPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1040, 564);
-		
+
 		/*
 		 * Menu bar itens
 		 */
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnCadastro = new JMenu("Cadastro");
 		mnCadastro.setPreferredSize(new Dimension(90, 26));
 		menuBar.add(mnCadastro);
-		
+
 		JMenu mnRelatorio = new JMenu("Relatório");
 		mnRelatorio.setPreferredSize(new Dimension(90, 26));
 		menuBar.add(mnRelatorio);
-		
+
 		JMenu mnBackup = new JMenu("Backup");
 		mnBackup.setPreferredSize(new Dimension(90, 26));
 		menuBar.add(mnBackup);
-		
+
 		/*
 		 * Instancia o contentPane
 		 */
@@ -71,7 +72,7 @@ public class FormPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		/*
 		 * Instancia o painel Geral card layout
 		 */
@@ -79,8 +80,8 @@ public class FormPrincipal extends JFrame {
 		geralPanel.setBounds(10, 11, 1004, 486);
 		contentPane.add(geralPanel);
 		geralPanel.setLayout(new CardLayout(0, 0));
-		CardLayout layout = (CardLayout)(geralPanel.getLayout());
-		
+		CardLayout layout = (CardLayout) (geralPanel.getLayout());
+
 		/*
 		 * Painel de veículos
 		 */
@@ -89,7 +90,7 @@ public class FormPrincipal extends JFrame {
 		geralPanel.add(veiculosPanel, "veiculos");
 		veiculosPanel.setLayout(null);
 		veiculosPanel.setVisible(false);
-		
+
 		/*
 		 * Painel de Serviços
 		 */
@@ -98,14 +99,23 @@ public class FormPrincipal extends JFrame {
 		geralPanel.add(servicosPanel, "servicos");
 		servicosPanel.setLayout(null);
 		servicosPanel.setVisible(false);
-		
+
 		/*
 		 * Painel de clientes
 		 */
-		JPanel clientesPanel = new JPanel();
+		FormClientes clientesPanel = new FormClientes();
 		geralPanel.add(clientesPanel, "clientes");
 		clientesPanel.setLayout(null);
-		
+		clientesPanel.setVisible(false);
+
+		/*
+		 * Painel de colaboradores
+		 */
+		FormColaboradores colaboradoresPanel = new FormColaboradores();
+		geralPanel.add(colaboradoresPanel, "colaboradores");
+		colaboradoresPanel.setLayout(null);
+		colaboradoresPanel.setVisible(false);
+
 		/*
 		 * Menu Cadastro itens
 		 */
@@ -116,10 +126,15 @@ public class FormPrincipal extends JFrame {
 			}
 		});
 		mnCadastro.add(mnItemClientes);
-		
+
 		JMenuItem mnItemColaboradores = new JMenuItem("Colaboradores");
+		mnItemColaboradores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(geralPanel, "colaboradores");
+			}
+		});
 		mnCadastro.add(mnItemColaboradores);
-		
+
 		JMenuItem mnItemServicos = new JMenuItem("Serviços");
 		mnItemServicos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -127,7 +142,7 @@ public class FormPrincipal extends JFrame {
 			}
 		});
 		mnCadastro.add(mnItemServicos);
-		
+
 		JMenuItem mnItemVeiculos = new JMenuItem("Veículos");
 		mnItemVeiculos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -135,10 +150,6 @@ public class FormPrincipal extends JFrame {
 			}
 		});
 		mnCadastro.add(mnItemVeiculos);
-		
-		JLabel lblNewLabel = new JLabel("testando layout");
-		lblNewLabel.setBounds(358, 31, 131, 93);
-		clientesPanel.add(lblNewLabel);
-		
+
 	}
 }
