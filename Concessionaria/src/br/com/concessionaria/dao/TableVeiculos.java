@@ -3,7 +3,7 @@ package br.com.concessionaria.dao;
 import java.sql.*;
 
 public class TableVeiculos {
-	
+
 	public static void main(String[] args) {
 		Connection con = null;
 		Statement stmt = null;
@@ -14,16 +14,26 @@ public class TableVeiculos {
 			System.out.println("Banco de dados aberto com sucesso.");
 			
 			stmt = con.createStatement();
-			String sql = "CREATE TABLE VEICULOS " + ""
-					+ "(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
-					+ " MODELO VARCHAR(30)," + " CHASSI VARCHAR(30)," 
-					+ " COR VARCHAR(30)," + " PLACA VARCHAR(10) NOT NULL,"
-					+ " ANO VARCHAR(10)," + " VALOR DOUBLE ); "
-					+ "CREATE TABLE COLABORADORES "+ ""
-					+ "(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
-					+ " NOME VARCHAR(70)," + " CPF VARCHAR(11),"
-				    + " ENDERECO VARCHAR(50), " + " TELEFONE VARCHAR(11)," 
-					+ " CARGO VARCHAR(15));";
+			String sql = "CREATE TABLE clientes "+ ""
+					+ "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ " nome VARCHAR(100)," + " cpf VARCHAR(14),"
+				    + " endereco VARCHAR(255)," + " telefone VARCHAR(12));"
+					
+					+ "CREATE TABLE colaboradores "+ ""
+					+ "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ " nome VARCHAR(100)," + " cpf VARCHAR(14),"
+				    + " endereco VARCHAR(255), " + " telefone VARCHAR(12),"
+					+ " salario DOUBLE," + " cargo VARCHAR(20)); "
+			
+					+ "CREATE TABLE servicos " + "" + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ " nome VARCHAR(100)," + " descricao TEXT(255)," + " valor DOUBLE ); "
+					
+					+"CREATE TABLE veiculos " + ""
+					+ "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ " modelo VARCHAR(30)," + " chassi VARCHAR(30)," 
+					+ " cor VARCHAR(30)," + " placa VARCHAR(10) NOT NULL,"
+					+ " ano VARCHAR(10)," + " valor DOUBLE )";
+					
 			stmt.executeUpdate(sql);
 			stmt.close();
 			con.close();
@@ -33,6 +43,6 @@ public class TableVeiculos {
 			System.exit(0);
 		}
 		
-		System.out.println("Tabela criada com sucesso!");
+		System.out.println("Banco criado com sucesso!");
 	}
 }

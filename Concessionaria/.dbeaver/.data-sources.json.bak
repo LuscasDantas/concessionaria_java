@@ -1,0 +1,29 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite_jdbc-1881f690f9c-41cb5ed3450db032": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "concessionaria.db",
+			"save-password": true,
+			"configuration": {
+				"database": "C:\\Users\\lucas.dantas\\eclipse-workspace\\Concessionaria\\src\\br\\com\\concessionaria\\dao\\concessionaria.db",
+				"url": "jdbc:sqlite:C:\\Users\\lucas.dantas\\eclipse-workspace\\Concessionaria\\src\\br\\com\\concessionaria\\dao\\concessionaria.db",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Desenvolvimento",
+			"color": "255,255,255",
+			"description": "Banco de dados de desenvolvimento",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}
