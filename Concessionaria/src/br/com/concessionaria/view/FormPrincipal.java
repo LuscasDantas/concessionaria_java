@@ -8,7 +8,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import java.awt.Dimension;
@@ -104,6 +103,7 @@ public class FormPrincipal extends JFrame {
 		 * Painel de clientes
 		 */
 		FormClientes clientesPanel = new FormClientes();
+		clientesPanel.setBounds(10, 11, 1004, 485);
 		geralPanel.add(clientesPanel, "clientes");
 		clientesPanel.setLayout(null);
 		clientesPanel.setVisible(false);
@@ -112,6 +112,7 @@ public class FormPrincipal extends JFrame {
 		 * Painel de colaboradores
 		 */
 		FormColaboradores colaboradoresPanel = new FormColaboradores();
+		colaboradoresPanel.setBounds(10, 11, 1004, 485);
 		geralPanel.add(colaboradoresPanel, "colaboradores");
 		colaboradoresPanel.setLayout(null);
 		colaboradoresPanel.setVisible(false);

@@ -1,6 +1,5 @@
 package br.com.concessionaria.view;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -10,30 +9,32 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import br.com.concessionaria.dao.DAOServicos;
+import br.com.concessionaria.model.Servico;
+
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 
-public class Servicos extends JPanel {
+public class FormServicos extends JPanel {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField txtIdServico;
-	private JTextField txtNome;
-	private JPanel geralPanel;
+	public static final long serialVersionUID = 1L;
+	public static JTextField txtIdServico;
+	public static JTextField txtNome;
+	public static JTextArea textDescricao;
+	public static JFormattedTextField txtValor;
 
 	/**
 	 * Create the panel.
 	 */
-	public Servicos(JPanel panel) {
-        this.geralPanel = panel;
-        
+	public FormServicos() {
 		setLayout(null);
 		setBounds(10, 11, 1004, 485);
-		
 		
 		JLabel lblCadServico = new JLabel("SERVIÇOS");
 		lblCadServico.setHorizontalAlignment(SwingConstants.CENTER);
@@ -44,51 +45,62 @@ public class Servicos extends JPanel {
 		
 		JLabel lblIdServico = new JLabel("ID:");
 		lblIdServico.setBounds(49, 89, 35, 14);
-		add(lblIdServico);
+		this.add(lblIdServico);
 		
 		txtIdServico = new JTextField();
 		txtIdServico.setBounds(71, 86, 48, 20);
-		txtIdServico.setEditable(false);
-		add(txtIdServico);
+		txtIdServico.setEditable(true);
+		this.add(txtIdServico);
 		txtIdServico.setColumns(10);
 		
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(49, 159, 46, 14);
-		add(lblNome);
+		this.add(lblNome);
 		
 		txtNome = new JTextField();
 		txtNome.setBounds(93, 156, 160, 20);
-		add(txtNome);
+		this.add(txtNome);
 		txtNome.setColumns(10);
 		
 		JLabel lblDescricao = new JLabel("Descrição:");
 		lblDescricao.setBounds(49, 207, 61, 14);
-		add(lblDescricao);
+		this.add(lblDescricao);
 		
-		JTextArea textDescricao = new JTextArea();
+		textDescricao = new JTextArea();
 		textDescricao.setRows(10);
 		textDescricao.setBounds(120, 202, 300, 50);
-		add(textDescricao);
+		this.add(textDescricao);
 		
 		JLabel lblValor = new JLabel("Valor:");
 		lblValor.setBounds(279, 159, 48, 14);
-		add(lblValor);
+		this.add(lblValor);
 		
-		JFormattedTextField txtValor = new JFormattedTextField();
+		txtValor = new JFormattedTextField();
 		txtValor.setBounds(332, 156, 88, 20);
-		add(txtValor);
+		this.add(txtValor);
 		
 		JButton btnCadastrar = new JButton("CADASTRAR");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Servico.cadastrarServico();
+			}
+		});
 		btnCadastrar.setBounds(111, 351, 110, 23);
 		this.add(btnCadastrar);
 		
 		JButton btnPesquisar = new JButton("PESQUISAR");
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOServicos.pesquisarServico();
+			}
+		});
 		btnPesquisar.setBounds(351, 351, 110, 23);
 		this.add(btnPesquisar);
 		
 		JButton btnEditar = new JButton("EDITAR");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Servico.editarServico();
 			}
 		});
 		btnEditar.setBounds(231, 351, 110, 23);
@@ -110,6 +122,7 @@ public class Servicos extends JPanel {
 		btnDeletar.setBackground(new Color(255, 0, 0));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DAOServicos.deletarServico();
 			}
 		});
 		btnDeletar.setBounds(351, 385, 110, 23);
@@ -119,8 +132,6 @@ public class Servicos extends JPanel {
 		btnVoltar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cardLayout = (CardLayout) geralPanel.getLayout();
-		        cardLayout.previous(geralPanel);
 			}
 		});
 		btnVoltar.setBounds(231, 385, 110, 23);

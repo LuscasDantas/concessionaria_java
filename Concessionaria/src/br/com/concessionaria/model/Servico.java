@@ -1,5 +1,10 @@
 package br.com.concessionaria.model;
 
+import br.com.concessionaria.dao.DAOServicos;
+import br.com.concessionaria.view.FormServicos;
+
+import java.sql.SQLException;
+
 public class Servico {
 	
 	private static int idServico = 0;
@@ -7,12 +12,45 @@ public class Servico {
 	private static String nome = "";
 	private static String descricao = "";
 
-	public Servico() {
+	public Servico(int idServico, String nome, String descricao, double valor) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.idServico = idServico;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.valor = valor;
 	}
 	
+	public Servico() {
+		
+	}
 	
+	public static void cadastrarServico() {
+		Servico servico = new Servico();
+		servico.setNome(FormServicos.txtNome.getText());
+		servico.setDescricao(FormServicos.textDescricao.getText());
+		servico.setValor(Double.parseDouble(FormServicos.txtValor.getText()));
+		
+		try {
+			DAOServicos.cadastrarServico(servico);
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void editarServico() {
+		Servico servico = new Servico();
+		servico.setNome(FormServicos.txtNome.getText());
+		servico.setDescricao(FormServicos.textDescricao.getText());
+		servico.setValor(Double.parseDouble(FormServicos.txtValor.getText()));
+		
+		try {
+			DAOServicos.editarServico(servico);
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static int getIdServico() {
 		return idServico;

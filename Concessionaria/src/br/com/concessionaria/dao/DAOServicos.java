@@ -62,9 +62,9 @@ public class DAOServicos {
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM SERVICOS WHERE ID = " + FormServicos.txtIdServico.getText() + ";");
 			
-			boolean service = rs.next();
+			boolean servico = rs.next();
 			
-			if (!service) {
+			if (!servico) {
 				FormServicos.txtIdServico.setText("");
 				FormServicos.txtNome.setText("");
 				FormServicos.textDescricao.setText("");
@@ -73,7 +73,7 @@ public class DAOServicos {
 				throw new Exception();
 			}
 			
-			while (service) {
+			while (servico) {
 				// Integer idServico = rs.getInt("idServico");
 				String nome = rs.getString("nome");
 				String descricao = rs.getString("descricao");
@@ -84,7 +84,7 @@ public class DAOServicos {
 				FormServicos.textDescricao.setText(descricao);
 				FormServicos.txtValor.setText(Double.toString(valor));
 				
-				service = false;
+				servico = false;
 			}
 			rs.close();
 			stmt.close();
@@ -93,6 +93,40 @@ public class DAOServicos {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Dialog", JOptionPane.ERROR_MESSAGE);
 
+		}
+	}
+	
+	/*
+	 * Editar
+	 */
+	public static void editarServico(Servico servico) throws SQLException {
+		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente editar o serviço?", "Confirmar",
+				JOptionPane.YES_NO_OPTION);
+		if (response == JOptionPane.NO_OPTION) {
+			JOptionPane.getDefaultLocale();
+		} else if (response == JOptionPane.YES_OPTION) {
+
+			Connection con = null;
+			try {				
+				Class.forName("org.sqlite.JDBC");
+				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+				con.setAutoCommit(false);
+				String query = "UPDATE SERVICOS SET NOME = ?, DESCRICAO = ?, VALOR = ?" + " WHERE ID = "
+				+ FormServicos.txtIdServico.getText() + ";";
+				
+				PreparedStatement stmt = con.prepareStatement(query);
+				stmt.setString(1, Servico.getNome());
+				stmt.setString(2, Servico.getDescricao());
+				stmt.setDouble(3, Servico.getValor());
+				stmt.execute();
+				stmt.close();
+				con.commit();
+				con.close();
+				System.out.println("Editado com sucesso!");
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
