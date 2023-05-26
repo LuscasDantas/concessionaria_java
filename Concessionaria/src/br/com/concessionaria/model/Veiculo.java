@@ -47,6 +47,23 @@ public class Veiculo {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void editarVeiculo() {
+		Veiculo veiculo = new Veiculo();
+		veiculo.setModelo(FormVeiculos.txtModelo.getText());
+		veiculo.setChassi(FormVeiculos.txtChassi.getText());
+		veiculo.setCor(FormVeiculos.txtCor.getText());
+		veiculo.setPlaca(FormVeiculos.txtPlaca.getText());
+		veiculo.setAno(FormVeiculos.txtAno.getText());
+		veiculo.setValor(Double.parseDouble(FormVeiculos.txtValor.getText()));
+		
+		try {
+			DAOVeiculos.editarVeiculo(veiculo);
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static int getIdVeiculo() {
 		return idVeiculo;

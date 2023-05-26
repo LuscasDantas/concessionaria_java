@@ -137,6 +137,7 @@ public class FormVeiculos extends JPanel {
 		JButton btnEditar = new JButton("EDITAR");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Veiculo.editarVeiculo();
 			}
 		});
 		btnEditar.setBounds(231, 351, 110, 23);
@@ -161,15 +162,11 @@ public class FormVeiculos extends JPanel {
 		btnDeletar.setBackground(new Color(255, 0, 0));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DAOVeiculos.deletarVeiculo();
 			}
 		});
-		btnDeletar.setBounds(351, 385, 110, 23);
+		btnDeletar.setBounds(231, 385, 110, 23);
 		this.add(btnDeletar);
-		
-		JButton btnVoltar = new JButton("VOLTAR");
-		btnVoltar.setBounds(231, 385, 110, 23);
-		this.add(btnVoltar);
-
 	}
 
 }
