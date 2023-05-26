@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import br.com.concessionaria.model.Servico;
+import br.com.concessionaria.utils.Services;
 import br.com.concessionaria.view.FormServicos;
 
 public class DAOServicos {
@@ -30,7 +31,7 @@ public class DAOServicos {
 				Class.forName("org.sqlite.JDBC");
 				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 				con.setAutoCommit(false);
-				String query = "INSERT INTO SERVICOS (ID, NOME, DESCRICAO, VALOR)" + "VALUES (NULL, ?,?,?)";
+				String query = "INSERT INTO servicos (id, nome, descricao, valor)" + "VALUES (NULL, ?,?,?)";
 				PreparedStatement stmt = con.prepareStatement(query);
 				stmt.setString(1, Servico.getNome());
 				stmt.setString(2, Servico.getDescricao());
@@ -60,15 +61,12 @@ public class DAOServicos {
 			System.out.println("Banco de dados aberto com sucesso");
 			stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM SERVICOS WHERE ID = " + FormServicos.txtIdServico.getText() + ";");
+					.executeQuery("SELECT * FROM servicos WHERE ID = " + FormServicos.txtIdServico.getText() + ";");
 			
 			boolean servico = rs.next();
 			
 			if (!servico) {
-				FormServicos.txtIdServico.setText("");
-				FormServicos.txtNome.setText("");
-				FormServicos.textDescricao.setText("");
-				FormServicos.txtValor.setText("");
+				Services.limparCampos(FormServicos.class);
 				
 				throw new Exception();
 			}
@@ -111,7 +109,7 @@ public class DAOServicos {
 				Class.forName("org.sqlite.JDBC");
 				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 				con.setAutoCommit(false);
-				String query = "UPDATE SERVICOS SET NOME = ?, DESCRICAO = ?, VALOR = ?" + " WHERE ID = "
+				String query = "UPDATE servicos SET nome = ?, descricao = ?, valor = ?" + " WHERE id = "
 				+ FormServicos.txtIdServico.getText() + ";";
 				
 				PreparedStatement stmt = con.prepareStatement(query);
@@ -147,11 +145,13 @@ public class DAOServicos {
 				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				String query = "DELETE from SERVICOS WHERE ID = " + FormServicos.txtIdServico.getText() + ";";
+				String query = "DELETE from servicos WHERE id = " + FormServicos.txtIdServico.getText() + ";";
 				stmt.executeUpdate(query);
 				con.commit();
 				stmt.close();
 				con.close();
+				
+				Services.limparCampos(FormServicos.class);
 				System.out.println("Registro Deletado com sucesso!");
 
 			} catch (Exception e) {

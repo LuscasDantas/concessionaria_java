@@ -69,7 +69,7 @@ public class DAOVeiculos {
 			boolean veiculo = rs.next();
 			
 			if (!veiculo) {
-				Services.limparCampos();
+				Services.limparCampos(FormVeiculos.class);;
 				
 				throw new Exception();
 			}
@@ -164,7 +164,7 @@ public class DAOVeiculos {
 				stmt.close();
 				con.close();
 				
-				Services.limparCampos();
+				Services.limparCampos(FormVeiculos.class);
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Atenção",

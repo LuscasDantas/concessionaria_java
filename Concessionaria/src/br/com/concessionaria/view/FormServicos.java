@@ -10,8 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import br.com.concessionaria.dao.DAOServicos;
 import br.com.concessionaria.model.Servico;
+import br.com.concessionaria.utils.Services;
+import br.com.concessionaria.dao.DAOServicos;
 
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -106,17 +107,14 @@ public class FormServicos extends JPanel {
 		btnEditar.setBounds(231, 351, 110, 23);
 		this.add(btnEditar);
 		
-		JButton btnCancelar = new JButton("CANCELAR");
-		btnCancelar.addActionListener(new ActionListener() {
+		JButton btnLimpar = new JButton("LIMPAR");
+		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtIdServico.setText("");
-				txtNome.setText("");
-				textDescricao.setText("");
-				txtValor.setText("");
+				Services.limparCampos(FormServicos.class);
 			}
 		});
-		btnCancelar.setBounds(110, 385, 110, 23);
-		this.add(btnCancelar);
+		btnLimpar.setBounds(110, 385, 110, 23);
+		this.add(btnLimpar);
 		
 		JButton btnDeletar = new JButton("DELETAR");
 		btnDeletar.setBackground(new Color(255, 0, 0));
@@ -125,17 +123,7 @@ public class FormServicos extends JPanel {
 				DAOServicos.deletarServico();
 			}
 		});
-		btnDeletar.setBounds(351, 385, 110, 23);
+		btnDeletar.setBounds(231, 385, 110, 23);
 		this.add(btnDeletar);
-		
-		JButton btnVoltar = new JButton("VOLTAR");
-		btnVoltar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnVoltar.setBounds(231, 385, 110, 23);
-		this.add(btnVoltar);
-
 	}
 }
