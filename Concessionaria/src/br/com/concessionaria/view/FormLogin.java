@@ -10,18 +10,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import br.com.concessionaria.view.FormPrincipal;
-
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -51,9 +47,9 @@ public class FormLogin extends JFrame {
 			public void run() {
 				try {
 					FormLogin frame = new FormLogin();
+					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 					frame.setTitle("Concessionária Top");
-					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -113,6 +109,15 @@ public class FormLogin extends JFrame {
 		panel.add(lblSenha);
 		
 		passwordField = new JPasswordField();
+		passwordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER) {
+					ChecarLogin();
+				}
+			}
+		});
 		passwordField.setBounds(235, 173, 200, 25);
 		panel.add(passwordField);
 		
@@ -140,11 +145,13 @@ public class FormLogin extends JFrame {
 		if (txtUserName.getText().equals("OPERADOR") && (senhaout.equals(Client))) {
 			FormPrincipal principal = new FormPrincipal();
 			principal.setVisible(true);
+			principal.setLocationRelativeTo(null);
 		}
 
 		else if (txtUserName.getText().equals("ADMIN") && (senhaout.equals(Corp))) {
 			FormPrincipal principal = new FormPrincipal();
 			principal.setVisible(true);
+			principal.setLocationRelativeTo(null);
 		} else {
 			//System.out.println("Usuário ou senha errado!");
 			JOptionPane.showMessageDialog(null, "Usuário ou senha errado");
