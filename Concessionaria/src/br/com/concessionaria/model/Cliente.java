@@ -2,7 +2,9 @@ package br.com.concessionaria.model;
 
 import java.sql.SQLException;
 import br.com.concessionaria.view.FormClientes;
+import br.com.concessionaria.view.FormColaboradores;
 import br.com.concessionaria.dao.DAOClientes;
+import br.com.concessionaria.dao.DAOColaboradores;
 
 public class Cliente {
 
@@ -31,8 +33,23 @@ public class Cliente {
 		cliente.setEndereco(FormClientes.txtEndereco.getText());
 		
 		try {
-			DAOClientes.cadastrarCliente();
+			DAOClientes.cadastrarCliente(cliente);
 					
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void editarColaborador() {
+		Cliente cliente = new Cliente();
+		cliente.setNome(FormClientes.txtNome.getText());
+		cliente.setCpf(FormClientes.txtCPF.getText());
+		cliente.setEndereco(FormClientes.txtEndereco.getText());
+		cliente.setTelefone(FormClientes.txtTelefone.getText());
+		
+		try {
+			DAOClientes.editarCliente(cliente);
+			
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

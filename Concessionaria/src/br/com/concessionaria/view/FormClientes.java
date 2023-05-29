@@ -1,25 +1,23 @@
 package br.com.concessionaria.view;
 
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import br.com.concessionaria.dao.DAOClientes;
-import br.com.concessionaria.dao.DAOVeiculos;
-import br.com.concessionaria.model.Veiculo;
-import br.com.concessionaria.model.Cliente;
-import br.com.concessionaria.model.Colaborador;
-import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Component;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import br.com.concessionaria.model.Cliente;
+import br.com.concessionaria.utils.Services;
+import br.com.concessionaria.dao.DAOClientes;
 
 public class FormClientes extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	public static JTextField txtId;
+	public static JTextField txtIdCliente;
 	public static JTextField txtNome;
 	public static JTextField txtTelefone;
 	public static JTextField txtEndereco;
@@ -32,22 +30,22 @@ public class FormClientes extends JPanel {
 		setLayout(null);
 		setBounds(10, 11, 1004, 485);
 
-		JLabel lblCliente = new JLabel("Cliente");
+		JLabel lblCliente = new JLabel("CLIENTES");
 		lblCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCliente.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblCliente.setFont(new Font("Arial", Font.BOLD, 18));
 		lblCliente.setBounds(459, 32, 100, 25);
 		this.add(lblCliente);
-
-		txtId = new JTextField();
-		txtId.setEditable(false);
-		txtId.setBounds(68, 38, 43, 19);
-		this.add(txtId);
-		txtId.setColumns(10);
-
+		
 		JLabel lblIdCliente = new JLabel("ID:");
 		lblIdCliente.setBounds(33, 39, 15, 14);
 		this.add(lblIdCliente);
+
+		txtIdCliente = new JTextField();
+		txtIdCliente.setEditable(true);
+		txtIdCliente.setBounds(68, 38, 43, 19);
+		this.add(txtIdCliente);
+		txtIdCliente.setColumns(10);
 
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -114,18 +112,16 @@ public class FormClientes extends JPanel {
 		JButton btnEditar = new JButton("EDITAR");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Cliente.editarColaborador();
 			}
 		});
 		btnEditar.setBounds(231, 351, 110, 23);
 		this.add(btnEditar);
 
-		JButton btnCancelar = new JButton("CANCELAR");
+		JButton btnCancelar = new JButton("LIMPAR");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtCPF.setText("");
-				txtNome.setText("");
-				txtEndereco.setText("");
-				txtTelefone.setText("");
+				Services.limparCampos(FormClientes.class);
 			}
 		});
 		btnCancelar.setBounds(110, 385, 110, 23);
@@ -135,6 +131,7 @@ public class FormClientes extends JPanel {
 		btnDeletar.setBackground(new Color(255, 0, 0));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DAOClientes.deletarCliente();
 			}
 		});
 		btnDeletar.setBounds(351, 385, 110, 23);
