@@ -1,7 +1,6 @@
 package br.com.concessionaria.model;
 
 import java.sql.SQLException;
-import javax.swing.JComboBox;
 import br.com.concessionaria.dao.DAOColaboradores;
 import br.com.concessionaria.view.FormColaboradores;
 
@@ -12,15 +11,17 @@ public class Colaborador {
 	private static String cpf = "";
 	private static String telefone = "";
 	private static String endereco = "";
+	private static double salario = 0;
 	private static String cargo = "";
 
-	public Colaborador(int idColaborador, String nome, String cpf, String telefone, String endereco ,String cargo) {
+	public Colaborador(int idColaborador, String nome, String cpf, String telefone, String endereco, double salario, String cargo) {
 		super();
 		this.idColaborador = idColaborador;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.endereco = endereco;
+		this.salario = salario;
 		this.cargo = cargo;
 	}
 	public Colaborador() {
@@ -28,22 +29,45 @@ public class Colaborador {
 
 	public static void cadastrarColaborador() {
 		Colaborador colaborador = new Colaborador();
-	
-		//JComboBox combo = new JComboBox();
 		
 		colaborador.setNome(FormColaboradores.txtNome.getText());
 		colaborador.setCpf(FormColaboradores.txtCPF.getText());
 		colaborador.setEndereco(FormColaboradores.txtEndereco.getText());
 		colaborador.setTelefone(FormColaboradores.txtTelefone.getText());
+		colaborador.setSalario(Double.parseDouble(FormColaboradores.txtSalario.getText()));
 	    colaborador.setCargo(FormColaboradores.cmbCargo.getSelectedItem().toString());
 		
 		try {
-			DAOColaboradores.cadastrarColaborador();
+			DAOColaboradores.cadastrarColaborador(colaborador);
 					
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public static double getSalario() {
+		return salario;
+	}
+	public static void setSalario(double salario) {
+		Colaborador.salario = salario;
+	}
+	public static void editarColaborador() {
+		Colaborador colaborador = new Colaborador();
+		colaborador.setNome(FormColaboradores.txtNome.getText());
+		colaborador.setCpf(FormColaboradores.txtCPF.getText());
+		colaborador.setEndereco(FormColaboradores.txtEndereco.getText());
+		colaborador.setTelefone(FormColaboradores.txtTelefone.getText());
+		colaborador.setSalario(Double.parseDouble(FormColaboradores.txtSalario.getText()));
+	    colaborador.setCargo(FormColaboradores.cmbCargo.getSelectedItem().toString());
+		
+		try {
+			DAOColaboradores.editarColaborador(colaborador);
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static int getIdColaborador() {
 		return idColaborador;
 	}

@@ -1,28 +1,35 @@
 package br.com.concessionaria.view;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import br.com.concessionaria.dao.DAOColaboradores;
-import br.com.concessionaria.model.Colaborador;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import java.awt.Color;
 import java.awt.Font;
+import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import br.com.concessionaria.model.Colaborador;
+import br.com.concessionaria.utils.Services;
+import br.com.concessionaria.dao.DAOColaboradores;
+import javax.swing.JFormattedTextField;
 
 public class FormColaboradores extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static JTextField txtTelefone;
-	public static JTextField txtEndereco;
-	public static JTextField txtCPF;
+	public static JTextField txtIdColaborador;
 	public static JTextField txtNome;
-	public static JTextField txtId;
+	public static JTextField txtCPF;
+	public static JTextField txtEndereco;
+	public static JTextField txtTelefone;
+	public static JFormattedTextField txtSalario;
 	public static JComboBox<String> cmbCargo;
 
 	/**
@@ -30,56 +37,90 @@ public class FormColaboradores extends JPanel {
 	 */
 	public FormColaboradores() {
 		setLayout(null);
+		setBounds(10, 11, 1004, 485);
+		
+		JLabel lblCadColaborador = new JLabel("COLABORADORES");
+		lblCadColaborador.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCadColaborador.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblCadColaborador.setFont(new Font("Arial", Font.BOLD, 18));
+		lblCadColaborador.setBounds(414, 32, 203, 25);
+		this.add(lblCadColaborador);
+		
+		JLabel lblIdCliente = new JLabel("ID:");
+		lblIdCliente.setBounds(55, 28, 15, 14);
+		this.add(lblIdCliente);
+		
+		txtIdColaborador = new JTextField();
+		txtIdColaborador.setEditable(true);
+		txtIdColaborador.setColumns(10);
+		txtIdColaborador.setBounds(90, 27, 43, 19);
+		this.add(txtIdColaborador);
+		
+		JLabel lblTelefone = new JLabel("Telefone");
+		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTelefone.setBounds(32, 179, 69, 28);
+		this.add(lblTelefone);
 
 		txtTelefone = new JTextField();
 		txtTelefone.setColumns(10);
-		txtTelefone.setBounds(99, 216, 141, 19);
-		add(txtTelefone);
-
-		JLabel lblTelefone = new JLabel("Telefone");
-		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTelefone.setBounds(35, 209, 69, 28);
-		add(lblTelefone);
+		txtTelefone.setBounds(99, 185, 141, 19);
+		this.add(txtTelefone);
 
 		JLabel lblEndereco = new JLabel("Endereço");
 		lblEndereco.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblEndereco.setBounds(32, 176, 69, 23);
-		add(lblEndereco);
+		lblEndereco.setBounds(32, 145, 69, 23);
+		this.add(lblEndereco);
 
 		txtEndereco = new JTextField();
 		txtEndereco.setColumns(10);
-		txtEndereco.setBounds(99, 180, 268, 19);
-		add(txtEndereco);
+		txtEndereco.setBounds(99, 149, 268, 19);
+		this.add(txtEndereco);
+		
+		JLabel lblCpf = new JLabel("CPF");
+		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCpf.setBounds(32, 115, 45, 19);
+		this.add(lblCpf);
 
 		txtCPF = new JTextField();
 		txtCPF.setColumns(10);
-		txtCPF.setBounds(98, 141, 141, 19);
-		add(txtCPF);
-
-		JLabel lblCpf = new JLabel("CPF");
-		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCpf.setBounds(35, 139, 45, 19);
-		add(lblCpf);
+		txtCPF.setBounds(99, 116, 141, 19);
+		this.add(txtCPF);
 
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNome.setBounds(35, 113, 45, 13);
-		add(lblNome);
+		lblNome.setBounds(32, 89, 45, 13);
+		this.add(lblNome);
 
 		txtNome = new JTextField();
 		txtNome.setColumns(10);
-		txtNome.setBounds(99, 112, 268, 19);
-		add(txtNome);
-
-		txtId = new JTextField();
-		txtId.setEditable(false);
-		txtId.setColumns(10);
-		txtId.setBounds(90, 27, 43, 19);
-		add(txtId);
-
-		JLabel lblIdCliente = new JLabel("ID:");
-		lblIdCliente.setBounds(55, 28, 15, 14);
-		add(lblIdCliente);
+		txtNome.setBounds(99, 88, 268, 19);
+		this.add(txtNome);
+		
+		JLabel lblSalario = new JLabel("Salário");
+		lblSalario.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSalario.setBounds(32, 218, 54, 14);
+		this.add(lblSalario);
+		
+		txtSalario = new JFormattedTextField();
+		txtSalario.setBounds(99, 218, 112, 20);
+		this.add(txtSalario);
+		
+		JLabel lblCargo = new JLabel("Cargo");
+		lblCargo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCargo.setBounds(32, 258, 69, 28);
+		this.add(lblCargo);
+			
+//		cmbCargo = new JComboBox();
+//		cmbCargo.setBounds(128, 263, 187, 22);
+//		cmbCargo.addItem("Atendente");
+//		cmbCargo.addItem("Gerente");
+//		cmbCargo.addItem("Mecanico");
+//		add(cmbCargo);
+		
+		cmbCargo = new JComboBox();
+		cmbCargo.setModel(new DefaultComboBoxModel(new String[] { "Atendente", "Mecanico", "Gerente" }));
+		cmbCargo.setBounds(99, 264, 257, 21);
+		this.add(cmbCargo);
 
 		/*
 		 * Botões
@@ -97,7 +138,6 @@ public class FormColaboradores extends JPanel {
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOColaboradores.pesquisarColaborador();
-
 			}
 		});
 		btnPesquisar.setBounds(351, 351, 110, 23);
@@ -106,18 +146,16 @@ public class FormColaboradores extends JPanel {
 		JButton btnEditar = new JButton("EDITAR");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Colaborador.editarColaborador();
 			}
 		});
 		btnEditar.setBounds(231, 351, 110, 23);
 		this.add(btnEditar);
 
-		JButton btnCancelar = new JButton("CANCELAR");
+		JButton btnCancelar = new JButton("LIMPAR");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtCPF.setText("");
-				txtNome.setText("");
-				txtEndereco.setText("");
-				txtTelefone.setText("");
+				Services.limparCampos(FormColaboradores.class);
 			}
 		});
 		btnCancelar.setBounds(110, 385, 110, 23);
@@ -127,6 +165,7 @@ public class FormColaboradores extends JPanel {
 		btnDeletar.setBackground(new Color(255, 0, 0));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DAOColaboradores.deletarColaborador();
 			}
 		});
 		btnDeletar.setBounds(351, 385, 110, 23);
@@ -136,21 +175,5 @@ public class FormColaboradores extends JPanel {
 		btnVoltar.setBounds(231, 385, 110, 23);
 		this.add(btnVoltar);
 
-		JLabel lblCargo = new JLabel("Cargo");
-		lblCargo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCargo.setBounds(32, 258, 69, 28);
-		add(lblCargo);
-			
-//		cmbCargo = new JComboBox();
-//		cmbCargo.setBounds(128, 263, 187, 22);
-//		cmbCargo.addItem("Atendente");
-//		cmbCargo.addItem("Gerente");
-//		cmbCargo.addItem("Mecanico");
-//		add(cmbCargo);
-		
-		cmbCargo = new JComboBox();
-		cmbCargo.setModel(new DefaultComboBoxModel(new String[] { "Atendente", "Mecanico", "Gerente" }));
-		cmbCargo.setBounds(99, 264, 257, 21);
-		add(cmbCargo);
 	}
 }
