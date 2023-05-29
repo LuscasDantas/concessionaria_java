@@ -22,6 +22,9 @@ public class FormClientes extends JPanel {
 	public static JTextField txtTelefone;
 	public static JTextField txtEndereco;
 	public static JTextField txtCPF;
+	public static JButton btnCadastrar;
+	public static JButton btnPesquisar;
+	public static JButton btnEditar;
 
 	/**
 	 * Create the frame.
@@ -90,7 +93,7 @@ public class FormClientes extends JPanel {
 		/*
 		 * Botões
 		 */
-		JButton btnCadastrar = new JButton("CADASTRAR");
+		btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cliente.cadastrarCliente();
@@ -99,7 +102,7 @@ public class FormClientes extends JPanel {
 		btnCadastrar.setBounds(111, 351, 110, 23);
 		this.add(btnCadastrar);
 
-		JButton btnPesquisar = new JButton("PESQUISAR");
+		btnPesquisar = new JButton("PESQUISAR");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOClientes.pesquisarCliente();
@@ -109,7 +112,7 @@ public class FormClientes extends JPanel {
 		btnPesquisar.setBounds(351, 351, 110, 23);
 		this.add(btnPesquisar);
 
-		JButton btnEditar = new JButton("EDITAR");
+		btnEditar = new JButton("EDITAR");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cliente.editarColaborador();
@@ -118,14 +121,15 @@ public class FormClientes extends JPanel {
 		btnEditar.setBounds(231, 351, 110, 23);
 		this.add(btnEditar);
 
-		JButton btnCancelar = new JButton("LIMPAR");
-		btnCancelar.addActionListener(new ActionListener() {
+		JButton btnLimpar = new JButton("LIMPAR");
+		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Services.limparCampos(FormClientes.class);
+				btnCadastrar.setEnabled(true);
 			}
 		});
-		btnCancelar.setBounds(110, 385, 110, 23);
-		this.add(btnCancelar);
+		btnLimpar.setBounds(110, 385, 110, 23);
+		this.add(btnLimpar);
 
 		JButton btnDeletar = new JButton("DELETAR");
 		btnDeletar.setBackground(new Color(255, 0, 0));

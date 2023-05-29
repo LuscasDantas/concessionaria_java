@@ -9,7 +9,6 @@ import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import br.com.concessionaria.model.Cliente;
-import br.com.concessionaria.model.Colaborador;
 import br.com.concessionaria.utils.Services;
 import br.com.concessionaria.view.FormClientes;
 import br.com.concessionaria.view.FormColaboradores;
@@ -71,6 +70,9 @@ public class DAOClientes {
 				Services.limparCampos(FormClientes.class);
 
 				throw new Exception();
+			}
+			else {
+				FormClientes.btnCadastrar.setEnabled(false);
 			}
 			
 			while (cliente) {
