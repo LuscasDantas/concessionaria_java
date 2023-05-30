@@ -69,6 +69,8 @@ public class DAOServicos {
 				Services.limparCampos(FormServicos.class);
 				
 				throw new Exception();
+			}else {
+				FormServicos.btnCadastrar.setEnabled(false);
 			}
 			
 			while (servico) {

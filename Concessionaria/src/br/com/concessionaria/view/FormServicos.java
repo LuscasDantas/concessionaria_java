@@ -29,6 +29,9 @@ public class FormServicos extends JPanel {
 	public static JTextField txtNome;
 	public static JTextArea textDescricao;
 	public static JFormattedTextField txtValor;
+	public static JButton btnCadastrar;
+	public static JButton btnPesquisar;
+	public static JButton btnEditar;
 
 	/**
 	 * Create the panel.
@@ -80,7 +83,7 @@ public class FormServicos extends JPanel {
 		txtValor.setBounds(332, 156, 88, 20);
 		this.add(txtValor);
 		
-		JButton btnCadastrar = new JButton("CADASTRAR");
+		btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Servico.cadastrarServico();
@@ -89,7 +92,7 @@ public class FormServicos extends JPanel {
 		btnCadastrar.setBounds(111, 351, 110, 23);
 		this.add(btnCadastrar);
 		
-		JButton btnPesquisar = new JButton("PESQUISAR");
+		btnPesquisar = new JButton("PESQUISAR");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOServicos.pesquisarServico();
@@ -98,7 +101,7 @@ public class FormServicos extends JPanel {
 		btnPesquisar.setBounds(351, 351, 110, 23);
 		this.add(btnPesquisar);
 		
-		JButton btnEditar = new JButton("EDITAR");
+		btnEditar = new JButton("EDITAR");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Servico.editarServico();
@@ -111,6 +114,7 @@ public class FormServicos extends JPanel {
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Services.limparCampos(FormServicos.class);
+				btnCadastrar.setEnabled(true);
 			}
 		});
 		btnLimpar.setBounds(110, 385, 110, 23);

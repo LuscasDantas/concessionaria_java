@@ -6,6 +6,7 @@ import java.awt.Component;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -31,6 +32,9 @@ public class FormColaboradores extends JPanel {
 	public static JTextField txtTelefone;
 	public static JFormattedTextField txtSalario;
 	public static JComboBox<String> cmbCargo;
+	public static JButton btnCadastrar;
+	public static JButton btnPesquisar;
+	public static JButton btnEditar;
 
 	/**
 	 * Create the panel.
@@ -125,7 +129,7 @@ public class FormColaboradores extends JPanel {
 		/*
 		 * Botões
 		 */
-		JButton btnCadastrar = new JButton("CADASTRAR");
+		btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Colaborador.cadastrarColaborador();
@@ -134,7 +138,7 @@ public class FormColaboradores extends JPanel {
 		btnCadastrar.setBounds(111, 351, 110, 23);
 		this.add(btnCadastrar);
 
-		JButton btnPesquisar = new JButton("PESQUISAR");
+		btnPesquisar = new JButton("PESQUISAR");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DAOColaboradores.pesquisarColaborador();
@@ -143,7 +147,7 @@ public class FormColaboradores extends JPanel {
 		btnPesquisar.setBounds(351, 351, 110, 23);
 		this.add(btnPesquisar);
 
-		JButton btnEditar = new JButton("EDITAR");
+		btnEditar = new JButton("EDITAR");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Colaborador.editarColaborador();
@@ -152,14 +156,15 @@ public class FormColaboradores extends JPanel {
 		btnEditar.setBounds(231, 351, 110, 23);
 		this.add(btnEditar);
 
-		JButton btnCancelar = new JButton("LIMPAR");
-		btnCancelar.addActionListener(new ActionListener() {
+		JButton btnLimpar = new JButton("LIMPAR");
+		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Services.limparCampos(FormColaboradores.class);
+				btnCadastrar.setEnabled(true);
 			}
 		});
-		btnCancelar.setBounds(110, 385, 110, 23);
-		this.add(btnCancelar);
+		btnLimpar.setBounds(110, 385, 110, 23);
+		this.add(btnLimpar);
 
 		JButton btnDeletar = new JButton("DELETAR");
 		btnDeletar.setBackground(new Color(255, 0, 0));
@@ -168,12 +173,8 @@ public class FormColaboradores extends JPanel {
 				DAOColaboradores.deletarColaborador();
 			}
 		});
-		btnDeletar.setBounds(351, 385, 110, 23);
+		btnDeletar.setBounds(231, 385, 110, 23);
 		this.add(btnDeletar);
-
-		JButton btnVoltar = new JButton("VOLTAR");
-		btnVoltar.setBounds(231, 385, 110, 23);
-		this.add(btnVoltar);
 
 	}
 }

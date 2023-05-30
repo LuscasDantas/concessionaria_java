@@ -72,6 +72,8 @@ public class DAOVeiculos {
 				Services.limparCampos(FormVeiculos.class);;
 				
 				throw new Exception();
+			}else {
+				FormVeiculos.btnCadastrar.setEnabled(false);
 			}
 			
 			while (veiculo) {

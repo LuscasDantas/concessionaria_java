@@ -138,11 +138,7 @@ public class FormClientes extends JPanel {
 				DAOClientes.deletarCliente();
 			}
 		});
-		btnDeletar.setBounds(351, 385, 110, 23);
+		btnDeletar.setBounds(231, 385, 110, 23);
 		this.add(btnDeletar);
-
-		JButton btnVoltar = new JButton("VOLTAR");
-		btnVoltar.setBounds(231, 385, 110, 23);
-		this.add(btnVoltar);
 	}
 }

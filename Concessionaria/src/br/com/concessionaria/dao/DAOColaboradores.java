@@ -73,6 +73,8 @@ public class DAOColaboradores {
 				Services.limparCampos(FormColaboradores.class);
 
 				throw new Exception();
+			}else {
+				FormColaboradores.btnCadastrar.setEnabled(false);
 			}
 			
 			while (colaborador) {

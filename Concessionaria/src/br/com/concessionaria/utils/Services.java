@@ -1,6 +1,7 @@
 package br.com.concessionaria.utils;
 import java.lang.reflect.Field;
 
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
@@ -17,6 +18,10 @@ public class Services {
                 if (valor instanceof JTextField) {
                     JTextField campoTexto = (JTextField) valor;
                     campoTexto.setText("");
+                }
+                else if (valor instanceof JTextArea ) {
+                	JTextArea campoTexto = (JTextArea) valor;
+                	campoTexto.setText("");
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
