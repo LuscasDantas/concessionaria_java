@@ -8,6 +8,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import br.com.concessionaria.controller.BackupController;
+import br.com.concessionaria.controller.RestoreController;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import java.awt.Dimension;
@@ -151,6 +155,25 @@ public class FormPrincipal extends JFrame {
 			}
 		});
 		mnCadastro.add(mnItemVeiculos);
+		
+		/*
+		 * Menu Backup Itens
+		 */
+		JMenuItem mnItemBackup = new JMenuItem("Realizar Backup");
+		mnItemBackup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BackupController.main(new String[0]);
+			}
+		});
+		mnBackup.add(mnItemBackup);
+		
+		JMenuItem mnItemRestaurar = new JMenuItem("Restaurar Backup");
+		mnItemRestaurar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RestoreController.main(new String[0]);			
+			}
+		});
+		mnBackup.add(mnItemRestaurar);
 
 	}
 }
