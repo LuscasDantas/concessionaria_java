@@ -18,37 +18,33 @@ public class DAOColaboradores {
 	 * Cadastrar
 	 */
 	public static void cadastrarColaborador(Colaborador colaborador) throws SQLException {
-		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente cadastrar o colaborador?", "Confirmar",
-				JOptionPane.YES_NO_OPTION);
-		if (response == JOptionPane.NO_OPTION) {
-			JOptionPane.getDefaultLocale();
-		} else if (response == JOptionPane.YES_OPTION) {
+		Connection con = null;
 
-			Connection con = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+			con.setAutoCommit(false);
+			String query = "INSERT INTO colaboradores (id, nome, cpf, telefone, endereco, salario, cargo)"
+					+ "VALUES (NULL, ?,?,?,?,?,?)";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, Colaborador.getNome());
+			stmt.setString(2, Colaborador.getCpf());
+			stmt.setString(3, Colaborador.getTelefone());
+			stmt.setString(4, Colaborador.getEndereco());
+			stmt.setDouble(5, Colaborador.getSalario());
+			stmt.setString(6, Colaborador.getCargo().toString());
+			stmt.execute();
+			stmt.close();
+			con.commit();
+			con.close();
 
-			try {
-				Class.forName("org.sqlite.JDBC");
-				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
-				con.setAutoCommit(false);
-				String query = "INSERT INTO colaboradores (id, nome, cpf, telefone, endereco, salario, cargo)"
-						+ "VALUES (NULL, ?,?,?,?,?,?)";
-				PreparedStatement stmt = con.prepareStatement(query);
-				stmt.setString(1, Colaborador.getNome());
-				stmt.setString(2, Colaborador.getCpf());
-				stmt.setString(3, Colaborador.getTelefone());
-				stmt.setString(4, Colaborador.getEndereco());
-				stmt.setDouble(5, Colaborador.getSalario());
-				stmt.setString(6, Colaborador.getCargo().toString());
-				stmt.execute();
-				stmt.close();
-				con.commit();
-				con.close();
-				System.out.println("Cadastrado com sucesso!");
-				
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+			JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			e.printStackTrace();
+			con.close();
 		}
 	}
 
@@ -62,10 +58,9 @@ public class DAOColaboradores {
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 			con.setAutoCommit(false);
-			System.out.println("Banco de dados aberto com sucesso");
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM colaboradores WHERE id =" + FormColaboradores.txtIdColaborador.getText() + ";");
+					"SELECT * FROM colaboradores WHERE cpf LIKE '%" + FormColaboradores.txtCPF.getText() + "%';");
 
 			boolean colaborador = rs.next();
 
@@ -73,12 +68,12 @@ public class DAOColaboradores {
 				Services.limparCampos(FormColaboradores.class);
 
 				throw new Exception();
-			}else {
+			} else {
 				FormColaboradores.btnCadastrar.setEnabled(false);
 			}
-			
+
 			while (colaborador) {
-				// Integer idColaborador = rs.getInt("idColaborador");
+				Integer idColaborador = rs.getInt("id");
 				String nome = rs.getString("nome");
 				String cpf = rs.getString("cpf");
 				String telefone = rs.getString("telefone");
@@ -86,14 +81,14 @@ public class DAOColaboradores {
 				double salario = rs.getDouble("salario");
 				String cargo = rs.getString("cargo");
 
-				// FormColaboradores.txtId.setText(id);
+				FormColaboradores.txtIdColaborador.setText(Integer.toString(idColaborador));
 				FormColaboradores.txtNome.setText(nome);
 				FormColaboradores.txtCPF.setText(cpf);
 				FormColaboradores.txtTelefone.setText(telefone);
 				FormColaboradores.txtEndereco.setText(endereco);
 				FormColaboradores.txtSalario.setText(Double.toString(salario));
 				FormColaboradores.cmbCargo.setSelectedItem(cargo);
-				
+
 				colaborador = false;
 			}
 			rs.close();
@@ -135,8 +130,8 @@ public class DAOColaboradores {
 				stmt.close();
 				con.commit();
 				con.close();
-				System.out.println("Editado com sucesso!");
 
+				JOptionPane.showMessageDialog(null, "Editado com sucesso!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -160,14 +155,15 @@ public class DAOColaboradores {
 				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
-				String query = "DELETE from colaboradores WHERE id=" + FormColaboradores.txtIdColaborador.getText() + ";";
+				String query = "DELETE from colaboradores WHERE id=" + FormColaboradores.txtIdColaborador.getText()
+						+ ";";
 				stmt.executeUpdate(query);
 				con.commit();
 				stmt.close();
 				con.close();
 
 				Services.limparCampos(FormColaboradores.class);
-				System.out.println("Registro Deletado com sucesso!");
+				JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Atenção",

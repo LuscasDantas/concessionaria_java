@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import br.com.concessionaria.model.Cliente;
 import br.com.concessionaria.utils.Services;
 import br.com.concessionaria.view.FormClientes;
-import br.com.concessionaria.view.FormColaboradores;
 
 public class DAOClientes {
 
@@ -19,34 +18,31 @@ public class DAOClientes {
 	 * Cadastrar
 	 */
 	public static void cadastrarCliente(Cliente cliente) throws SQLException {
-		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente cadastrar o cliente", "Confirmar",
-				JOptionPane.YES_NO_OPTION);
-		if (response == JOptionPane.NO_OPTION) {
-			JOptionPane.getDefaultLocale();
-		} else if (response == JOptionPane.YES_OPTION) {
+		Connection con = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+			con.setAutoCommit(false);
+			String query = "INSERT INTO clientes (id, nome, cpf, telefone, endereco)" + "VALUES (NULL, ?,?,?,?)";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, Cliente.getNome());
+			stmt.setString(2, Cliente.getCpf());
+			stmt.setString(3, Cliente.getTelefone());
+			stmt.setString(4, Cliente.getEndereco());
+			stmt.execute();
+			stmt.close();
+			con.commit();
+			con.close();
 
-			Connection con = null;
+			JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 
-			try {
-				Class.forName("org.sqlite.JDBC");
-				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
-				con.setAutoCommit(false);
-				String query = "INSERT INTO clientes (id, nome, cpf, telefone, endereco)" + "VALUES (NULL, ?,?,?,?)";
-				PreparedStatement stmt = con.prepareStatement(query);
-				stmt.setString(1, Cliente.getNome());
-				stmt.setString(2, Cliente.getCpf());
-				stmt.setString(3, Cliente.getTelefone());
-				stmt.setString(4, Cliente.getEndereco());
-				stmt.execute();
-				stmt.close();
-				con.commit();
-				con.close();
-
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			e.printStackTrace();
+			con.close();
 		}
+
 	}
 
 	/*
@@ -62,32 +58,31 @@ public class DAOClientes {
 			System.out.println("Banco de dados aberto com sucesso");
 			stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM clientes WHERE id =" + FormClientes.txtIdCliente.getText() + ";");
-			
+					.executeQuery("SELECT * FROM clientes WHERE cpf LIKE '%" + FormClientes.txtCPF.getText() + "%';");
+
 			boolean cliente = rs.next();
 
 			if (!cliente) {
 				Services.limparCampos(FormClientes.class);
 
 				throw new Exception();
-			}
-			else {
+			} else {
 				FormClientes.btnCadastrar.setEnabled(false);
 			}
-			
+
 			while (cliente) {
-				//int id = rs.getInt("idCliente");
+				int idCliente = rs.getInt("id");
 				String nome = rs.getString("nome");
 				String cpf = rs.getString("cpf");
 				String telefone = rs.getString("telefone");
 				String endereco = rs.getString("endereco");
 
-				// FormClientes.txtId.setText(id);
+				FormClientes.txtIdCliente.setText(Integer.toString(idCliente));
 				FormClientes.txtNome.setText(nome);
 				FormClientes.txtCPF.setText(cpf);
 				FormClientes.txtTelefone.setText(telefone);
 				FormClientes.txtEndereco.setText(endereco);
-				
+
 				cliente = false;
 			}
 			rs.close();
@@ -99,7 +94,7 @@ public class DAOClientes {
 
 		}
 	}
-	
+
 	/*
 	 * Editar
 	 */
@@ -115,8 +110,8 @@ public class DAOClientes {
 				Class.forName("org.sqlite.JDBC");
 				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 				con.setAutoCommit(false);
-				String query = "UPDATE clientes SET nome = ?, cpf = ?, telefone = ?, endereco = ?"
-						+ " WHERE id = " + FormClientes.txtIdCliente.getText() + ";";
+				String query = "UPDATE clientes SET nome = ?, cpf = ?, telefone = ?, endereco = ?" + " WHERE id = "
+						+ FormClientes.txtIdCliente.getText() + ";";
 
 				PreparedStatement stmt = con.prepareStatement(query);
 				stmt.setString(1, Cliente.getNome());
@@ -127,7 +122,8 @@ public class DAOClientes {
 				stmt.close();
 				con.commit();
 				con.close();
-				System.out.println("Editado com sucesso!");
+
+				JOptionPane.showMessageDialog(null, "Editado com sucesso!");
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -157,9 +153,9 @@ public class DAOClientes {
 				con.commit();
 				stmt.close();
 				con.close();
-				
-				Services.limparCampos(FormColaboradores.class);
-				System.out.println("Registro Deletado com sucesso!");
+
+				Services.limparCampos(FormClientes.class);
+				JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Atenção",

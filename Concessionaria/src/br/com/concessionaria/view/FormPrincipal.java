@@ -86,6 +86,15 @@ public class FormPrincipal extends JFrame {
 		CardLayout layout = (CardLayout) (geralPanel.getLayout());
 
 		/*
+		 * Painel de vendas
+		 */
+		FormVendas vendasPanel = new FormVendas();
+		vendasPanel.setBounds(10, 11, 1004, 485);
+		geralPanel.add(vendasPanel, "vendas");
+		vendasPanel.setLayout(null);
+		vendasPanel.setVisible(false);
+		
+		/*
 		 * Painel de veículos
 		 */
 		FormVeiculos veiculosPanel = new FormVeiculos();
@@ -155,6 +164,14 @@ public class FormPrincipal extends JFrame {
 			}
 		});
 		mnCadastro.add(mnItemVeiculos);
+		
+		JMenuItem mnItemVendas = new JMenuItem("Vendas");
+		mnItemVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(geralPanel, "vendas");
+			}
+		});
+		mnCadastro.add(mnItemVendas);
 		
 		/*
 		 * Menu Backup Itens

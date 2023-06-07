@@ -19,35 +19,32 @@ public class DAOVeiculos {
 	 * Cadastrar
 	 */
 	public static void cadastrarVeiculo(Veiculo veiculo) throws SQLException {
-		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente cadastrar o veículo?", "Confirmar",
-				JOptionPane.YES_NO_OPTION);
-		if (response == JOptionPane.NO_OPTION) {
-			JOptionPane.getDefaultLocale();
-		} else if (response == JOptionPane.YES_OPTION) {
+		Connection con = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+			con.setAutoCommit(false);
+			String query = "INSERT INTO veiculos (id, modelo, chassi, cor, placa, ano, valor)"
+					+ "VALUES (NULL, ?,?,?,?,?,?)";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, Veiculo.getModelo());
+			stmt.setString(2, Veiculo.getChassi());
+			stmt.setString(3, Veiculo.getCor());
+			stmt.setString(4, Veiculo.getPlaca());
+			stmt.setString(5, Veiculo.getAno());
+			stmt.setDouble(6, Veiculo.getValor());
+			stmt.execute();
+			stmt.close();
+			con.commit();
+			con.close();
 
-			Connection con = null;
-			try {
-				Class.forName("org.sqlite.JDBC");
-				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
-				con.setAutoCommit(false);
-				String query = "INSERT INTO veiculos (id, modelo, chassi, cor, placa, ano, valor)"
-						+ "VALUES (NULL, ?,?,?,?,?,?)";
-				PreparedStatement stmt = con.prepareStatement(query);
-				stmt.setString(1, Veiculo.getModelo());
-				stmt.setString(2, Veiculo.getChassi());
-				stmt.setString(3, Veiculo.getCor());
-				stmt.setString(4, Veiculo.getPlaca());
-				stmt.setString(5, Veiculo.getAno());
-				stmt.setDouble(6, Veiculo.getValor());
-				stmt.execute();
-				stmt.close();
-				con.commit();
-				con.close();
-				System.out.println("Cadastrado com sucesso!");
+			JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			e.printStackTrace();
+			con.close();
 		}
 	}
 
@@ -63,37 +60,37 @@ public class DAOVeiculos {
 			con.setAutoCommit(false);
 			System.out.println("Banco de dados aberto com sucesso");
 			stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM veiculos WHERE id =" + FormVeiculos.txtIdVeiculo.getText() + ";");
-			
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM veiculos WHERE placa LIKE '%" + FormVeiculos.txtPlaca.getText() + "%';");
+
 			boolean veiculo = rs.next();
-			
+
 			if (!veiculo) {
-				Services.limparCampos(FormVeiculos.class);;
-				
+				Services.limparCampos(FormVeiculos.class);
+
 				throw new Exception();
-			}else {
+			} else {
 				FormVeiculos.btnCadastrar.setEnabled(false);
 			}
-			
+
 			while (veiculo) {
-				//Integer idVeiculo = rs.getInt("idVeiculo");
+				Integer idVeiculo = rs.getInt("id");
 				String modelo = rs.getString("modelo");
 				String chassi = rs.getString("chassi");
 				String cor = rs.getString("cor");
 				String placa = rs.getString("placa");
 				String ano = rs.getString("ano");
 				double valor = rs.getDouble("valor");
-				
-				//FormVeiculos.txtIdVeiculo.setText(idVeiculo.toString());
+
+				FormVeiculos.txtIdVeiculo.setText(Integer.toString(idVeiculo));
 				FormVeiculos.txtModelo.setText(modelo);
 				FormVeiculos.txtChassi.setText(chassi);
 				FormVeiculos.txtCor.setText(cor);
-				FormVeiculos.txtAno.setText(placa);
-				FormVeiculos.txtPlaca.setText(ano);
+				FormVeiculos.txtPlaca.setText(placa);
+				FormVeiculos.txtAno.setText(ano);
 				FormVeiculos.txtValor.setText(Double.toString(valor));
-				
-				//interrompe o loop se encontrar o registro
+
+				// interrompe o loop se encontrar o registro
 				veiculo = false;
 			}
 			rs.close();
@@ -105,7 +102,7 @@ public class DAOVeiculos {
 
 		}
 	}
-	
+
 	/*
 	 * Editar
 	 */
@@ -117,13 +114,13 @@ public class DAOVeiculos {
 		} else if (response == JOptionPane.YES_OPTION) {
 
 			Connection con = null;
-			try {				
+			try {
 				Class.forName("org.sqlite.JDBC");
 				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 				con.setAutoCommit(false);
-				String query = "UPDATE veiculos SET modelo = ?, chassi = ?, cor = ?, ano = ?, "
-						+ "placa = ?, valor = ?" + " WHERE id = " + FormVeiculos.txtIdVeiculo.getText() + ";";
-				
+				String query = "UPDATE veiculos SET modelo = ?, chassi = ?, cor = ?, placa = ?, " + "ano = ?, valor = ?"
+						+ " WHERE id = " + FormVeiculos.txtIdVeiculo.getText() + ";";
+
 				PreparedStatement stmt = con.prepareStatement(query);
 				stmt.setString(1, Veiculo.getModelo());
 				stmt.setString(2, Veiculo.getChassi());
@@ -135,7 +132,8 @@ public class DAOVeiculos {
 				stmt.close();
 				con.commit();
 				con.close();
-				System.out.println("Editado com sucesso!");
+
+				JOptionPane.showMessageDialog(null, "Editado com sucesso!");
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -165,14 +163,14 @@ public class DAOVeiculos {
 				con.commit();
 				stmt.close();
 				con.close();
-				
+
 				Services.limparCampos(FormVeiculos.class);
+				JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Atenção",
 						JOptionPane.ERROR_MESSAGE);
 			}
-			System.out.println("Registro Deletado com sucesso!");
 		}
 
 	}

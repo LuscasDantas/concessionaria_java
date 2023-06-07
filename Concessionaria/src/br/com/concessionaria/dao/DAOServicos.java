@@ -20,31 +20,27 @@ public class DAOServicos {
 	 * Cadastrar
 	 */
 	public static void cadastrarServico(Servico servico) throws SQLException {
-		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente cadastrar o serviço?", "Confirmar",
-				JOptionPane.YES_NO_OPTION);
-		if (response == JOptionPane.NO_OPTION) {
-			JOptionPane.getDefaultLocale();
-		} else if (response == JOptionPane.YES_OPTION) {
+		Connection con = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+			con.setAutoCommit(false);
+			String query = "INSERT INTO servicos (id, nome, descricao, valor)" + "VALUES (NULL, ?,?,?)";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, Servico.getNome());
+			stmt.setString(2, Servico.getDescricao());
+			stmt.setDouble(3, Servico.getValor());
+			stmt.execute();
+			stmt.close();
+			con.commit();
+			con.close();
+			JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 
-			Connection con = null;
-			try {
-				Class.forName("org.sqlite.JDBC");
-				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
-				con.setAutoCommit(false);
-				String query = "INSERT INTO servicos (id, nome, descricao, valor)" + "VALUES (NULL, ?,?,?)";
-				PreparedStatement stmt = con.prepareStatement(query);
-				stmt.setString(1, Servico.getNome());
-				stmt.setString(2, Servico.getDescricao());
-				stmt.setDouble(3, Servico.getValor());
-				stmt.execute();
-				stmt.close();
-				con.commit();
-				con.close();
-				System.out.println("Cadastrado com sucesso!");
-
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			e.printStackTrace();
+			con.close();
 		}
 	}
 
@@ -61,29 +57,29 @@ public class DAOServicos {
 			System.out.println("Banco de dados aberto com sucesso");
 			stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM servicos WHERE ID = " + FormServicos.txtIdServico.getText() + ";");
-			
+					.executeQuery("SELECT * FROM servicos WHERE nome LIKE '%" + FormServicos.txtNome.getText() + "%';");
+
 			boolean servico = rs.next();
-			
+
 			if (!servico) {
 				Services.limparCampos(FormServicos.class);
-				
+
 				throw new Exception();
-			}else {
+			} else {
 				FormServicos.btnCadastrar.setEnabled(false);
 			}
-			
+
 			while (servico) {
-				// Integer idServico = rs.getInt("idServico");
+				Integer idServico = rs.getInt("id");
 				String nome = rs.getString("nome");
 				String descricao = rs.getString("descricao");
 				double valor = rs.getDouble("valor");
 
-				// FormServicos.txtIdServico.setText(idServico.toString());
+				FormServicos.txtIdServico.setText(Integer.toString(idServico));
 				FormServicos.txtNome.setText(nome);
 				FormServicos.textDescricao.setText(descricao);
 				FormServicos.txtValor.setText(Double.toString(valor));
-				
+
 				servico = false;
 			}
 			rs.close();
@@ -95,7 +91,7 @@ public class DAOServicos {
 
 		}
 	}
-	
+
 	/*
 	 * Editar
 	 */
@@ -107,13 +103,13 @@ public class DAOServicos {
 		} else if (response == JOptionPane.YES_OPTION) {
 
 			Connection con = null;
-			try {				
+			try {
 				Class.forName("org.sqlite.JDBC");
 				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 				con.setAutoCommit(false);
 				String query = "UPDATE servicos SET nome = ?, descricao = ?, valor = ?" + " WHERE id = "
-				+ FormServicos.txtIdServico.getText() + ";";
-				
+						+ FormServicos.txtIdServico.getText() + ";";
+
 				PreparedStatement stmt = con.prepareStatement(query);
 				stmt.setString(1, Servico.getNome());
 				stmt.setString(2, Servico.getDescricao());
@@ -122,7 +118,8 @@ public class DAOServicos {
 				stmt.close();
 				con.commit();
 				con.close();
-				System.out.println("Editado com sucesso!");
+				
+				JOptionPane.showMessageDialog(null, "Editado com sucesso!");
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -152,16 +149,14 @@ public class DAOServicos {
 				con.commit();
 				stmt.close();
 				con.close();
-				
+
 				Services.limparCampos(FormServicos.class);
-				System.out.println("Registro Deletado com sucesso!");
+				JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Atenção",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-
 	}
-
 }
