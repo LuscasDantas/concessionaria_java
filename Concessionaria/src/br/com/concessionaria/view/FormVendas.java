@@ -1,17 +1,26 @@
 package br.com.concessionaria.view;
 
-import java.awt.Component;
+
 import java.awt.Font;
+import java.awt.Component;
+import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.JTextField;
+
+import br.com.concessionaria.model.Colaborador;
+import br.com.concessionaria.model.Venda;
+import br.com.concessionaria.utils.Services;
+
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FormVendas extends JPanel {
 
@@ -19,24 +28,14 @@ public class FormVendas extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static JButton btnEditar;
+	public static JButton btnCadastrar;
+	public static JButton btnPesquisar;
 	public static JTextField txtIdVenda;
-	public static JTextField txtVeiculoVenda;
-	public static JTextField txtClienteVenda;
+	public static JTextField txtValorTotal;
+	public static JComboBox<String> cmbCliente;
+	public static JComboBox<String> cmbVeiculo;
 	public static JComboBox<String> cmbColaborador;
-
-	@Override
-	public void addNotify() {
-		super.addNotify();
-		// Chame o método que deseja executar ao abrir a tela
-		preencheCmbColaborador();
-		atualizarTela();
-	}
-
-	public void atualizarTela() {
-		FormVendas formVendas = new FormVendas();
-		formVendas.revalidate();
-		formVendas.repaint();
-	}
 
 	/**
 	 * Create the panel.
@@ -66,19 +65,9 @@ public class FormVendas extends JPanel {
 		lblVeiculoVenda.setBounds(34, 133, 46, 14);
 		add(lblVeiculoVenda);
 
-		txtVeiculoVenda = new JTextField();
-		txtVeiculoVenda.setBounds(112, 133, 160, 20);
-		add(txtVeiculoVenda);
-		txtVeiculoVenda.setColumns(10);
-
 		JLabel lblClienteVenda = new JLabel("Cliente:");
 		lblClienteVenda.setBounds(34, 185, 46, 14);
 		add(lblClienteVenda);
-
-		txtClienteVenda = new JTextField();
-		txtClienteVenda.setColumns(10);
-		txtClienteVenda.setBounds(112, 185, 160, 20);
-		add(txtClienteVenda);
 
 		JLabel lblColaborador = new JLabel("Colaborador:");
 		lblColaborador.setBounds(34, 230, 77, 14);
@@ -87,10 +76,90 @@ public class FormVendas extends JPanel {
 		cmbColaborador = new JComboBox<String>();
 		cmbColaborador.setBounds(112, 226, 160, 22);
 		this.add(cmbColaborador);
+		this.preencheCmbColaborador();
 		
+		cmbCliente = new JComboBox<String>();
+		cmbCliente.setBounds(112, 181, 160, 22);
+		this.add(cmbCliente);
+		this.preencheCmbCliente();
+		
+		cmbVeiculo = new JComboBox<String>();
+		cmbVeiculo.setBounds(112, 129, 160, 22);
+		this.add(cmbVeiculo);
+		this.preencheCmbVeiculo();
+		
+		/*
+		 * Botões
+		 */
+		JButton btnAtualizar = new JButton("ATUALIZAR");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				preencheCmbColaborador();
+				preencheCmbCliente();
+				preencheCmbVeiculo();
+			}
+		});
+		btnAtualizar.setBounds(275, 386, 110, 23);
+		add(btnAtualizar);
+		
+//		btnCadastrar = new JButton("CADASTRAR");
+//		btnCadastrar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				Veiculo.cadastrarVeiculo();
+//			}
+//		});
+//		btnCadastrar.setBounds(35, 352, 110, 23);
+//		this.add(btnCadastrar);
+//		
+//		btnPesquisar = new JButton("PESQUISAR");
+//		btnPesquisar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				DAOVeiculos.pesquisarVeiculo();
+//			}
+//		});
+//		btnPesquisar.setBounds(275, 352, 110, 23);
+//		this.add(btnPesquisar);
+//		
+//		btnEditar = new JButton("EDITAR");
+//		btnEditar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				Veiculo.editarVeiculo();
+//			}
+//		});
+//		btnEditar.setBounds(155, 352, 110, 23);
+//		this.add(btnEditar);
+		
+		JButton btnLimpar = new JButton("LIMPAR");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Services.limparCampos(FormVendas.class);
+				btnCadastrar.setEnabled(true);
+			}
+		});
+		btnLimpar.setBounds(34, 386, 110, 23);
+		this.add(btnLimpar);
+		
+		txtValorTotal = new JTextField();
+		txtValorTotal.setBounds(112, 270, 160, 20);
+		add(txtValorTotal);
+		txtValorTotal.setColumns(10);
+		
+		JLabel lblValorTotal = new JLabel("Valor Total");
+		lblValorTotal.setBounds(34, 273, 62, 14);
+		add(lblValorTotal);
+		
+//		JButton btnDeletar = new JButton("DELETAR");
+//		btnDeletar.setBackground(new Color(255, 0, 0));
+//		btnDeletar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				DAOVeiculos.deletarVeiculo();
+//			}
+//		});
+//		btnDeletar.setBounds(155, 386, 110, 23);
+//		this.add(btnDeletar);
 
-		
 	}
+	
 	public void preencheCmbColaborador() {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -100,14 +169,16 @@ public class FormVendas extends JPanel {
 
 			PreparedStatement selectColaboradoresStmt = con.prepareStatement(selectColaboradoresQuery);
 			ResultSet colaboradoresResult = selectColaboradoresStmt.executeQuery();
+			
+			cmbColaborador.removeAllItems();
+			cmbColaborador.addItem("Selecione");
 
 			while (colaboradoresResult.next()) {
 				// Recuperar os dados do colaborador
-				int idColaborador = colaboradoresResult.getInt("id");
 				String nomeColaborador = colaboradoresResult.getString("nome");
 
 				// Preencher os campos da interface com os dados do colaborador
-				cmbColaborador.addItem(Integer.toString(idColaborador) + " - " + nomeColaborador);
+				cmbColaborador.addItem(nomeColaborador);
 			}
 
 			colaboradoresResult.close();
@@ -116,5 +187,73 @@ public class FormVendas extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void preencheCmbCliente() {
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+
+			String selectClientesQuery = "SELECT * FROM clientes ORDER BY nome ASC";
+
+			PreparedStatement selectClientesStmt = con.prepareStatement(selectClientesQuery);
+			ResultSet clientesResult = selectClientesStmt.executeQuery();
+			
+			cmbCliente.removeAllItems();
+			cmbCliente.addItem("Selecione");
+
+			while (clientesResult.next()) {
+				// Recuperar os dados do cliente
+				String nomeCliente = clientesResult.getString("nome");
+
+				// Preencher os campos da interface com os dados do cliente
+				cmbCliente.addItem(nomeCliente);
+			}
+
+			clientesResult.close();
+			selectClientesStmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preencheCmbVeiculo() {
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+
+			String selectVeiculosQuery = "SELECT * FROM veiculos ORDER BY modelo ASC";
+
+			PreparedStatement selectVeiculosStmt = con.prepareStatement(selectVeiculosQuery);
+			ResultSet veiculosResult = selectVeiculosStmt.executeQuery();
+			
+			cmbVeiculo.removeAllItems();
+			cmbVeiculo.addItem("Selecione");
+
+			while (veiculosResult.next()) {
+				// Recuperar os dados do veiculo
+				String modeloVeiculo = veiculosResult.getString("modelo");
+
+				// Preencher os campos da interface com os dados do veiculo
+				cmbVeiculo.addItem(modeloVeiculo);
+			}
+
+			veiculosResult.close();
+			selectVeiculosStmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String getColaboradorSelecionado() {
+	    Object selectedColaborador = cmbColaborador.getSelectedItem();
+
+	    if (selectedColaborador != null) {
+	        return selectedColaborador.toString();
+	    }
+
+	    return null; // Retorne null ou trate o caso em que nenhum item está selecionado
 	}
 }

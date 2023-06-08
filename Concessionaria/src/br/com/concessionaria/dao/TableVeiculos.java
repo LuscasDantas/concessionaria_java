@@ -27,7 +27,11 @@ public class TableVeiculos {
 
 					+ "CREATE TABLE veiculos " + "" + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
 					+ " modelo VARCHAR(30) NOT NULL," + " chassi VARCHAR(30) NOT NULL," + " cor VARCHAR(30),"
-					+ " placa VARCHAR(10) NOT NULL UNIQUE," + " ano VARCHAR(10)," + " valor DOUBLE )";
+					+ " placa VARCHAR(10) NOT NULL UNIQUE," + " ano VARCHAR(10)," + " valor DOUBLE );"
+					
+					+"CREATE TABLE vendas " + "" + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+" cliente VARCHAR(100) NOT NULL," + " colaborador VARCHAR(100) NOT NULL," + " veiculo VARCHAR(30) NOT NULL	,"
+					+" valor_total DOUBLE NOT NULL);";
 
 			stmt.executeUpdate(sql);
 			stmt.close();
