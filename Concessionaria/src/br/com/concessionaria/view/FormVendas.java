@@ -12,8 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import br.com.concessionaria.model.Colaborador;
-import br.com.concessionaria.model.Venda;
+import br.com.concessionaria.dao.DAOVendas;
 import br.com.concessionaria.utils.Services;
 
 import javax.swing.JButton;
@@ -105,12 +104,12 @@ public class FormVendas extends JPanel {
 //		btnCadastrar = new JButton("CADASTRAR");
 //		btnCadastrar.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent e) {
-//				Veiculo.cadastrarVeiculo();
+//				DAOVendas.cadastrarVenda(venda);
 //			}
 //		});
 //		btnCadastrar.setBounds(35, 352, 110, 23);
 //		this.add(btnCadastrar);
-//		
+////		
 //		btnPesquisar = new JButton("PESQUISAR");
 //		btnPesquisar.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent e) {
@@ -175,6 +174,7 @@ public class FormVendas extends JPanel {
 
 			while (colaboradoresResult.next()) {
 				// Recuperar os dados do colaborador
+				int idColaborador = colaboradoresResult.getInt("id");
 				String nomeColaborador = colaboradoresResult.getString("nome");
 
 				// Preencher os campos da interface com os dados do colaborador
