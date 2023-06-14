@@ -1,22 +1,26 @@
 package br.com.concessionaria.view;
 
-
 import java.awt.Font;
 import java.awt.Component;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-
+import java.util.List;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import br.com.concessionaria.dao.DAOColaboradores;
 import br.com.concessionaria.dao.DAOVendas;
 import br.com.concessionaria.utils.Services;
+import br.com.concessionaria.model.*;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,21 +76,21 @@ public class FormVendas extends JPanel {
 		lblColaborador.setBounds(34, 230, 77, 14);
 		add(lblColaborador);
 
-		cmbColaborador = new JComboBox<String>();
-		cmbColaborador.setBounds(112, 226, 160, 22);
+		cmbColaborador = new JComboBox<>();
+		cmbColaborador.setBounds(112, 226, 429, 22);
 		this.add(cmbColaborador);
 		this.preencheCmbColaborador();
-		
-		cmbCliente = new JComboBox<String>();
+
+		cmbCliente = new JComboBox<>();
 		cmbCliente.setBounds(112, 181, 160, 22);
 		this.add(cmbCliente);
 		this.preencheCmbCliente();
-		
-		cmbVeiculo = new JComboBox<String>();
+
+		cmbVeiculo = new JComboBox<>();
 		cmbVeiculo.setBounds(112, 129, 160, 22);
 		this.add(cmbVeiculo);
 		this.preencheCmbVeiculo();
-		
+
 		/*
 		 * Botões
 		 */
@@ -100,15 +104,15 @@ public class FormVendas extends JPanel {
 		});
 		btnAtualizar.setBounds(275, 386, 110, 23);
 		add(btnAtualizar);
-		
-//		btnCadastrar = new JButton("CADASTRAR");
-//		btnCadastrar.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				DAOVendas.cadastrarVenda(venda);
-//			}
-//		});
-//		btnCadastrar.setBounds(35, 352, 110, 23);
-//		this.add(btnCadastrar);
+
+		btnCadastrar = new JButton("CADASTRAR");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                Venda.cadastrarVenda();
+			}
+		});
+		btnCadastrar.setBounds(35, 352, 110, 23);
+		this.add(btnCadastrar);
 ////		
 //		btnPesquisar = new JButton("PESQUISAR");
 //		btnPesquisar.addActionListener(new ActionListener() {
@@ -127,7 +131,7 @@ public class FormVendas extends JPanel {
 //		});
 //		btnEditar.setBounds(155, 352, 110, 23);
 //		this.add(btnEditar);
-		
+
 		JButton btnLimpar = new JButton("LIMPAR");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -137,16 +141,16 @@ public class FormVendas extends JPanel {
 		});
 		btnLimpar.setBounds(34, 386, 110, 23);
 		this.add(btnLimpar);
-		
+
 		txtValorTotal = new JTextField();
 		txtValorTotal.setBounds(112, 270, 160, 20);
 		add(txtValorTotal);
 		txtValorTotal.setColumns(10);
-		
+
 		JLabel lblValorTotal = new JLabel("Valor Total");
 		lblValorTotal.setBounds(34, 273, 62, 14);
 		add(lblValorTotal);
-		
+
 //		JButton btnDeletar = new JButton("DELETAR");
 //		btnDeletar.setBackground(new Color(255, 0, 0));
 //		btnDeletar.addActionListener(new ActionListener() {
@@ -158,29 +162,38 @@ public class FormVendas extends JPanel {
 //		this.add(btnDeletar);
 
 	}
-	
+
 	public void preencheCmbColaborador() {
+		ArrayList<Colaborador> colaboradores = new ArrayList<>();
+		Colaborador colaborador = new Colaborador();
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 
 			String selectColaboradoresQuery = "SELECT * FROM colaboradores WHERE cargo = 'Atendente' ORDER BY nome ASC";
 
-			PreparedStatement selectColaboradoresStmt = con.prepareStatement(selectColaboradoresQuery);
-			ResultSet colaboradoresResult = selectColaboradoresStmt.executeQuery();
-			
+			Statement selectColaboradoresStmt = con.createStatement();
+			ResultSet colaboradoresResult = selectColaboradoresStmt.executeQuery(selectColaboradoresQuery);
+
 			cmbColaborador.removeAllItems();
 			cmbColaborador.addItem("Selecione");
 
 			while (colaboradoresResult.next()) {
 				// Recuperar os dados do colaborador
-				int idColaborador = colaboradoresResult.getInt("id");
-				String nomeColaborador = colaboradoresResult.getString("nome");
+				int id = colaboradoresResult.getInt("id");
+				String nome = colaboradoresResult.getString("nome");
+
+				colaborador = new Colaborador();
+				colaborador.setIdColaborador(id);
+				colaborador.setNome(nome);
+				
+				colaboradores.add(colaborador);
 
 				// Preencher os campos da interface com os dados do colaborador
-				cmbColaborador.addItem(nomeColaborador);
+				cmbColaborador.addItem(id + " - " + nome);
 			}
 
+			con.close();
 			colaboradoresResult.close();
 			selectColaboradoresStmt.close();
 
@@ -188,28 +201,39 @@ public class FormVendas extends JPanel {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void preencheCmbCliente() {
+		ArrayList<Cliente> clientes = new ArrayList<>();
+		
+		Cliente cliente = new Cliente();
+		
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 
 			String selectClientesQuery = "SELECT * FROM clientes ORDER BY nome ASC";
 
-			PreparedStatement selectClientesStmt = con.prepareStatement(selectClientesQuery);
-			ResultSet clientesResult = selectClientesStmt.executeQuery();
+			Statement selectClientesStmt = con.createStatement();
+			ResultSet clientesResult = selectClientesStmt.executeQuery(selectClientesQuery);
 			
 			cmbCliente.removeAllItems();
 			cmbCliente.addItem("Selecione");
 
 			while (clientesResult.next()) {
 				// Recuperar os dados do cliente
+				int idCliente = clientesResult.getInt("id");
 				String nomeCliente = clientesResult.getString("nome");
 
+				cliente = new Cliente();
+				cliente.setIdCliente(idCliente);
+				cliente.setNome(nomeCliente);
+				
+				clientes.add(cliente);
+				
 				// Preencher os campos da interface com os dados do cliente
-				cmbCliente.addItem(nomeCliente);
+				cmbCliente.addItem(idCliente + " - " + nomeCliente);
 			}
-
+			con.close();
 			clientesResult.close();
 			selectClientesStmt.close();
 
@@ -219,26 +243,37 @@ public class FormVendas extends JPanel {
 	}
 	
 	public void preencheCmbVeiculo() {
+		ArrayList<Veiculo> veiculos = new ArrayList<>();
+		
+		Veiculo veiculo = new Veiculo();
+		
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 
 			String selectVeiculosQuery = "SELECT * FROM veiculos ORDER BY modelo ASC";
 
-			PreparedStatement selectVeiculosStmt = con.prepareStatement(selectVeiculosQuery);
-			ResultSet veiculosResult = selectVeiculosStmt.executeQuery();
+			Statement selectVeiculosStmt = con.createStatement();
+			ResultSet veiculosResult = selectVeiculosStmt.executeQuery(selectVeiculosQuery);
 			
 			cmbVeiculo.removeAllItems();
 			cmbVeiculo.addItem("Selecione");
 
 			while (veiculosResult.next()) {
 				// Recuperar os dados do veiculo
-				String modeloVeiculo = veiculosResult.getString("modelo");
+				int idVeiculo = veiculosResult.getInt("id");
+				String modelo = veiculosResult.getString("modelo");
 
+				veiculo = new Veiculo();
+				veiculo.setIdVeiculo(idVeiculo);
+				veiculo.setModelo(modelo);
+				
+				veiculos.add(veiculo);
+				
 				// Preencher os campos da interface com os dados do veiculo
-				cmbVeiculo.addItem(modeloVeiculo);
+				cmbVeiculo.addItem(idVeiculo + " - " + modelo);
 			}
-
+			con.close();
 			veiculosResult.close();
 			selectVeiculosStmt.close();
 
@@ -246,14 +281,5 @@ public class FormVendas extends JPanel {
 			e.printStackTrace();
 		}
 	}
-	
-	public String getColaboradorSelecionado() {
-	    Object selectedColaborador = cmbColaborador.getSelectedItem();
 
-	    if (selectedColaborador != null) {
-	        return selectedColaborador.toString();
-	    }
-
-	    return null; // Retorne null ou trate o caso em que nenhum item está selecionado
-	}
 }

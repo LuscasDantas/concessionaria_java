@@ -25,14 +25,14 @@ public class DAOVendas {
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
 			con.setAutoCommit(false);
-			String insertVendaQuery = "INSERT INTO vendas (id, colaborador_id, veiculo_id, cliente_id, valorTotal) "
+			String insertVendaQuery = "INSERT INTO vendas (id, cliente, colaborador, veiculo, valor_total) "
 					+ "VALUES (NULL, ?, ?, ?, ?)";
 			
 			PreparedStatement insertVendaStmt = con.prepareStatement(insertVendaQuery);
-			insertVendaStmt.setInt(1, venda.getColaborador().getIdColaborador());
-			insertVendaStmt.setInt(2, venda.getVeiculo().getIdVeiculo());
-			insertVendaStmt.setInt(3, venda.getCliente().getIdCliente());
-			insertVendaStmt.setDouble(4,venda.getValorTotal());
+			insertVendaStmt.setInt(3, Venda.getClienteSelecionado().getIdCliente());
+			insertVendaStmt.setInt(1, Venda.getColaboradorSelecionado().getIdColaborador());
+			insertVendaStmt.setInt(2, Venda.getVeiculoSelecionado().getIdVeiculo());
+			insertVendaStmt.setDouble(4,Venda.getValorTotal());
 			insertVendaStmt.execute();
 			insertVendaStmt.close();
 			con.commit();
