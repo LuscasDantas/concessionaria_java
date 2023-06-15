@@ -85,12 +85,12 @@ public class Venda {
 		venda.setCliente(getClienteSelecionado());
 		venda.setValorTotal(Double.parseDouble(FormVendas.txtValorTotal.getText()));
 		
-//		try {
-//			
-//			
-//		}catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			DAOVendas.cadastrarVenda(venda);
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/*
@@ -274,8 +274,5 @@ public class Venda {
 //			e.printStackTrace();
 //		}
 //	}
-
-	
-    
     
 }

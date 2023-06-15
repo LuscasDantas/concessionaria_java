@@ -3,24 +3,22 @@ package br.com.concessionaria.view;
 import java.awt.Font;
 import java.awt.Component;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.List;
+
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import br.com.concessionaria.dao.DAOColaboradores;
 import br.com.concessionaria.dao.DAOVendas;
 import br.com.concessionaria.utils.Services;
 import br.com.concessionaria.model.*;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -113,30 +111,25 @@ public class FormVendas extends JPanel {
 		});
 		btnCadastrar.setBounds(35, 352, 110, 23);
 		this.add(btnCadastrar);
-////		
+		
 //		btnPesquisar = new JButton("PESQUISAR");
 //		btnPesquisar.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent e) {
-//				DAOVeiculos.pesquisarVeiculo();
+//				DAOVendas.pesquisarVenda();
 //			}
 //		});
 //		btnPesquisar.setBounds(275, 352, 110, 23);
 //		this.add(btnPesquisar);
-//		
-//		btnEditar = new JButton("EDITAR");
-//		btnEditar.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				Veiculo.editarVeiculo();
-//			}
-//		});
-//		btnEditar.setBounds(155, 352, 110, 23);
-//		this.add(btnEditar);
+
 
 		JButton btnLimpar = new JButton("LIMPAR");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Services.limparCampos(FormVendas.class);
 				btnCadastrar.setEnabled(true);
+				preencheCmbColaborador();
+				preencheCmbCliente();
+				preencheCmbVeiculo();
 			}
 		});
 		btnLimpar.setBounds(34, 386, 110, 23);
