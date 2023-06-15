@@ -1,6 +1,7 @@
 package br.com.concessionaria.view;
 
 import java.awt.Font;
+import java.awt.Color;
 import java.awt.Component;
 import java.sql.ResultSet;
 
@@ -144,15 +145,15 @@ public class FormVendas extends JPanel {
 		lblValorTotal.setBounds(34, 273, 62, 14);
 		add(lblValorTotal);
 
-//		JButton btnDeletar = new JButton("DELETAR");
-//		btnDeletar.setBackground(new Color(255, 0, 0));
-//		btnDeletar.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				DAOVeiculos.deletarVeiculo();
-//			}
-//		});
-//		btnDeletar.setBounds(155, 386, 110, 23);
-//		this.add(btnDeletar);
+		JButton btnDeletar = new JButton("DELETAR");
+		btnDeletar.setBackground(new Color(255, 0, 0));
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOVendas.deletarVenda();
+			}
+		});
+		btnDeletar.setBounds(155, 386, 110, 23);
+		this.add(btnDeletar);
 
 	}
 

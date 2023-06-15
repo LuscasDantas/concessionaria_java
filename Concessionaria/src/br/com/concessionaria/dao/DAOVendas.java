@@ -100,4 +100,35 @@ public class DAOVendas {
 //
 //		}
 //	}
+	
+	public static void deletarVenda() {
+		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o registro?", "Confirmar",
+				JOptionPane.YES_NO_OPTION);
+
+		if (response == JOptionPane.NO_OPTION) {
+			JOptionPane.getDefaultLocale();
+		} else if (response == JOptionPane.YES_OPTION) {
+			Connection con = null;
+			Statement stmt = null;
+			try {
+				Class.forName("org.sqlite.JDBC");
+				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+				con.setAutoCommit(false);
+				stmt = con.createStatement();
+				String query = "DELETE from vendas WHERE id =" + FormVendas.txtIdVenda.getText() + ";";
+				stmt.executeUpdate(query);
+				con.commit();
+				stmt.close();
+				con.close();
+
+				Services.limparCampos(FormVendas.class);
+				JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Atenção",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+	}
 }
