@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 import br.com.concessionaria.dao.DAOVeiculos;
 import br.com.concessionaria.dao.DAOVendas;
 import br.com.concessionaria.dao.DAOColaboradores;
@@ -140,12 +142,14 @@ public class Venda {
 				con.close();
 				rs.close();
 				stmt.close();
+				return colaborador;
 
 			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
 				e.printStackTrace();
 			}
 			
-			return colaborador;
 		}
 		return null; // Retorne null ou trate o caso em que nenhum item está selecionado
 	}
@@ -193,15 +197,16 @@ public class Venda {
 				con.close();
 				rs.close();
 				stmt.close();
-
+				return cliente;
+				
 			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
 				e.printStackTrace();
 			}
-			System.out.println(cliente.getIdCliente());
-			System.out.println(cliente.getNome());
-			return cliente;
+		
 		}
-		return null; // Retorne null ou trate o caso em que nenhum item está selecionado
+		return null;
 	}
 
 	/*
@@ -251,28 +256,17 @@ public class Venda {
 				con.close();
 				rs.close();
 				stmt.close();
+				
+				return veiculo;
 
 			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
 				e.printStackTrace();
 			}
-			System.out.println(veiculo.getIdVeiculo());
-			System.out.println(veiculo.getModelo());
-			return veiculo;
+		
 		}
-		return null; // Retorne null ou trate o caso em que nenhum item está selecionado
+		return null;
 	}	
-	
-//	public static void editarvenda() {
-//		Venda venda = new Venda();
-//
-//		venda.setValorTotal(Double.parseDouble(FormVendas.txtValorTotal.getText()));
-//		
-//		try {
-//			DAOVendas.editarvenda(venda);
-//			
-//		}catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
     
 }
