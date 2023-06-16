@@ -4,92 +4,113 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.ResultSet;
-
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
-
-import java.util.ArrayList;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
-import br.com.concessionaria.dao.DAOVendas;
-import br.com.concessionaria.utils.Services;
-import br.com.concessionaria.model.*;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormVendas extends JPanel {
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.SwingConstants;
 
+import br.com.concessionaria.model.Cliente;
+import br.com.concessionaria.model.Servico;
+import br.com.concessionaria.model.Veiculo;
+import br.com.concessionaria.utils.Services;
+import br.com.concessionaria.model.Colaborador;
+import br.com.concessionaria.model.OrdemServico;
+
+import javax.swing.JTextField;
+
+public class FormOS extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	public static JButton btnEditar;
+	public static JTextField txtIdOS;
 	public static JButton btnCadastrar;
 	public static JButton btnPesquisar;
-	public static JTextField txtIdVenda;
-	public static JTextField txtValorTotal;
+	public static JTextField txtValorOS;
 	public static JComboBox<String> cmbCliente;
 	public static JComboBox<String> cmbVeiculo;
+	public static JComboBox<String> cmbServico;
 	public static JComboBox<String> cmbColaborador;
+	
 
 	/**
 	 * Create the panel.
 	 */
-	public FormVendas() {
-		setToolTipText("");
+	public FormOS() {
+		
 		setLayout(null);
 		setBounds(10, 11, 1004, 485);
-
-		JLabel lblCadVendas = new JLabel("VENDAS");
-		lblCadVendas.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCadVendas.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblCadVendas.setFont(new Font("Arial", Font.BOLD, 18));
-		lblCadVendas.setBounds(459, 32, 100, 25);
-		this.add(lblCadVendas);
+		
+		JLabel lblCadOS = new JLabel("ORDENS DE SERVIÇO");
+		lblCadOS.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCadOS.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblCadOS.setFont(new Font("Arial", Font.BOLD, 18));
+		lblCadOS.setBounds(420, 33, 221, 25);
+		this.add(lblCadOS);
 
 		JLabel lblIdVenda = new JLabel("ID:");
 		lblIdVenda.setBounds(34, 81, 25, 14);
 		add(lblIdVenda);
+		
+		txtIdOS = new JTextField();
+		txtIdOS.setBounds(62, 78, 57, 20);
+		add(txtIdOS);
+		txtIdOS.setColumns(10);
+		
+		JLabel lblServicoOS = new JLabel("Serviço:");
+		lblServicoOS.setBounds(34, 133, 46, 14);
+		add(lblServicoOS);
 
-		txtIdVenda = new JTextField();
-		txtIdVenda.setBounds(56, 78, 40, 20);
-		add(txtIdVenda);
-		txtIdVenda.setColumns(10);
+		JLabel lblClienteOS = new JLabel("Cliente:");
+		lblClienteOS.setBounds(34, 185, 46, 14);
+		add(lblClienteOS);
 
-		JLabel lblVeiculoVenda = new JLabel("Veículo:");
-		lblVeiculoVenda.setBounds(34, 133, 46, 14);
-		add(lblVeiculoVenda);
-
-		JLabel lblClienteVenda = new JLabel("Cliente:");
-		lblClienteVenda.setBounds(34, 185, 46, 14);
-		add(lblClienteVenda);
-
-		JLabel lblColaborador = new JLabel("Colaborador:");
-		lblColaborador.setBounds(34, 230, 77, 14);
-		add(lblColaborador);
-
+		JLabel lblColaboradorOS = new JLabel("Colaborador:");
+		lblColaboradorOS.setBounds(34, 230, 77, 14);
+		add(lblColaboradorOS);
+		
+		JLabel lblVeiculoOS = new JLabel("Veículo:");
+		lblVeiculoOS.setBounds(34, 274, 46, 14);
+		add(lblVeiculoOS);
+		
 		cmbColaborador = new JComboBox<>();
-		cmbColaborador.setBounds(112, 226, 429, 22);
+		cmbColaborador.setBounds(121, 226, 250, 22);
 		this.add(cmbColaborador);
 		this.preencheCmbColaborador();
 
 		cmbCliente = new JComboBox<>();
-		cmbCliente.setBounds(112, 181, 160, 22);
+		cmbCliente.setBounds(121, 181, 250, 22);
 		this.add(cmbCliente);
 		this.preencheCmbCliente();
 
 		cmbVeiculo = new JComboBox<>();
-		cmbVeiculo.setBounds(112, 129, 160, 22);
+		cmbVeiculo.setBounds(121, 270, 250, 22);
 		this.add(cmbVeiculo);
 		this.preencheCmbVeiculo();
-
+		
+		cmbServico = new JComboBox<>();
+		cmbServico.setBounds(121, 133, 250, 22);
+		this.add(cmbServico);
+		this.preencheCmbServico();
+		
+		JLabel lblValorOS = new JLabel("Valor Total:");
+		lblValorOS.setBounds(34, 316, 77, 14);
+		add(lblValorOS);
+		
+		txtValorOS = new JTextField();
+		txtValorOS.setBounds(121, 313, 160, 22);
+		add(txtValorOS);
+		txtValorOS.setColumns(10);
+		
 		/*
 		 * Botões
 		 */
@@ -99,18 +120,19 @@ public class FormVendas extends JPanel {
 				preencheCmbColaborador();
 				preencheCmbCliente();
 				preencheCmbVeiculo();
+				preencheCmbServico();
 			}
 		});
-		btnAtualizar.setBounds(275, 386, 110, 23);
+		btnAtualizar.setBounds(155, 396, 110, 23);
 		add(btnAtualizar);
 
 		btnCadastrar = new JButton("CADASTRAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                Venda.cadastrarVenda();
+              OrdemServico.cadastrarOS();
 			}
 		});
-		btnCadastrar.setBounds(35, 352, 110, 23);
+		btnCadastrar.setBounds(35, 396, 110, 23);
 		this.add(btnCadastrar);
 		
 //		btnPesquisar = new JButton("PESQUISAR");
@@ -131,71 +153,27 @@ public class FormVendas extends JPanel {
 				preencheCmbColaborador();
 				preencheCmbCliente();
 				preencheCmbVeiculo();
+				preencheCmbServico();
 			}
 		});
-		btnLimpar.setBounds(34, 386, 110, 23);
+		btnLimpar.setBounds(34, 430, 110, 23);
 		this.add(btnLimpar);
 		
-		JLabel lblValorTotal = new JLabel("Valor Total");
-		lblValorTotal.setBounds(34, 273, 62, 14);
-		add(lblValorTotal);
-		
-		txtValorTotal = new JTextField();
-		txtValorTotal.setBounds(112, 270, 160, 20);
-		add(txtValorTotal);
-		txtValorTotal.setColumns(10);		
-
 		JButton btnDeletar = new JButton("DELETAR");
 		btnDeletar.setBackground(new Color(255, 0, 0));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DAOVendas.deletarVenda();
+				//DAOVendas.deletarVenda();
 			}
 		});
-		btnDeletar.setBounds(155, 386, 110, 23);
+		btnDeletar.setBounds(155, 430, 110, 23);
 		this.add(btnDeletar);
 
 	}
-
-	public void preencheCmbColaborador() {
-		ArrayList<Colaborador> colaboradores = new ArrayList<>();
-		Colaborador colaborador = new Colaborador();
-		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
-
-			String selectColaboradoresQuery = "SELECT * FROM colaboradores WHERE cargo = 'Atendente' ORDER BY nome ASC";
-
-			Statement selectColaboradoresStmt = con.createStatement();
-			ResultSet colaboradoresResult = selectColaboradoresStmt.executeQuery(selectColaboradoresQuery);
-
-			cmbColaborador.removeAllItems();
-			cmbColaborador.addItem("Selecione");
-
-			while (colaboradoresResult.next()) {
-				// Recuperar os dados do colaborador
-				int id = colaboradoresResult.getInt("id");
-				String nome = colaboradoresResult.getString("nome");
-
-				colaborador = new Colaborador();
-				colaborador.setIdColaborador(id);
-				colaborador.setNome(nome);
-				
-				colaboradores.add(colaborador);
-
-				// Preencher os campos da interface com os dados do colaborador
-				cmbColaborador.addItem(id + " - " + nome);
-			}
-
-			con.close();
-			colaboradoresResult.close();
-			selectColaboradoresStmt.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	
+	/*
+	 * Funções de preencher as Combos
+	 */
 	public void preencheCmbCliente() {
 		ArrayList<Cliente> clientes = new ArrayList<>();
 		
@@ -230,6 +208,85 @@ public class FormVendas extends JPanel {
 			con.close();
 			clientesResult.close();
 			selectClientesStmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preencheCmbColaborador() {
+		ArrayList<Colaborador> colaboradores = new ArrayList<>();
+		Colaborador colaborador = new Colaborador();
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+
+			String selectColaboradoresQuery = "SELECT * FROM colaboradores WHERE cargo = 'Mecanico' ORDER BY nome ASC";
+
+			Statement selectColaboradoresStmt = con.createStatement();
+			ResultSet colaboradoresResult = selectColaboradoresStmt.executeQuery(selectColaboradoresQuery);
+
+			cmbColaborador.removeAllItems();
+			cmbColaborador.addItem("Selecione");
+
+			while (colaboradoresResult.next()) {
+				// Recuperar os dados do colaborador
+				int id = colaboradoresResult.getInt("id");
+				String nome = colaboradoresResult.getString("nome");
+
+				colaborador = new Colaborador();
+				colaborador.setIdColaborador(id);
+				colaborador.setNome(nome);
+				
+				colaboradores.add(colaborador);
+
+				// Preencher os campos da interface com os dados do colaborador
+				cmbColaborador.addItem(id + " - " + nome);
+			}
+
+			con.close();
+			colaboradoresResult.close();
+			selectColaboradoresStmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preencheCmbServico() {
+		ArrayList<Servico> servicos = new ArrayList<>();
+		
+		Servico servico = new Servico();
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+
+			String selectServicosQuery = "SELECT * FROM servicos ORDER BY nome ASC";
+
+			Statement selectServicosStmt = con.createStatement();
+			ResultSet servicosResult = selectServicosStmt.executeQuery(selectServicosQuery);
+			
+			cmbServico.removeAllItems();
+			cmbServico.addItem("Selecione");
+
+			while (servicosResult.next()) {
+				// Recuperar os dados do servico
+				int idServico = servicosResult.getInt("id");
+				String nome = servicosResult.getString("nome");
+
+				servico = new Servico();
+				servico.setIdServico(idServico);
+				servico.setNome(selectServicosQuery);
+				
+				servicos.add(servico);
+				
+				// Preencher os campos da interface com os dados do servico
+				cmbServico.addItem(idServico + " - " + nome);
+			}
+			con.close();
+			servicosResult.close();
+			selectServicosStmt.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -275,5 +332,4 @@ public class FormVendas extends JPanel {
 			e.printStackTrace();
 		}
 	}
-
 }

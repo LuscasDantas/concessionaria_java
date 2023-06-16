@@ -28,11 +28,18 @@ public class TableVeiculos {
 					+ "CREATE TABLE veiculos " + "" + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
 					+ " modelo VARCHAR(30) NOT NULL," + " chassi VARCHAR(30) NOT NULL," + " cor VARCHAR(30),"
 					+ " placa VARCHAR(10) NOT NULL UNIQUE," + " ano VARCHAR(10)," + " valor DOUBLE );"
-					
-					+ "CREATE TABLE vendas " + "" + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
-					+ " cliente INTEGER NOT NULL,"	+ " colaborador INTEGER NOT NULL,"	
-					+ " veiculo INTEGER NOT NULL," + " valor_total DOUBLE NOT NULL,"
+
+					+ "CREATE TABLE ordens_servicos " + "" + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ " cliente INTEGER NOT NULL," + " colaborador INTEGER NOT NULL," + " servico INTEGER NOT NULL,"
+					+ " veiculo INTEGER NOT NULL," + " valor_os DOUBLE NOT NULL,"
 					+ " FOREIGN KEY (cliente) REFERENCES clientes (id),"
+					+ " FOREIGN KEY (colaborador) REFERENCES colaboradores (id),"
+					+ " FOREIGN KEY (servico) REFERENCES servicos (id),"
+					+ " FOREIGN KEY (veiculo) REFERENCES veiculos (id));"
+
+					+ "CREATE TABLE vendas " + "" + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+					+ " cliente INTEGER NOT NULL," + " colaborador INTEGER NOT NULL," + " veiculo INTEGER NOT NULL,"
+					+ " valor_total DOUBLE NOT NULL," + " FOREIGN KEY (cliente) REFERENCES clientes (id),"
 					+ " FOREIGN KEY (colaborador) REFERENCES colaboradores (id),"
 					+ " FOREIGN KEY (veiculo) REFERENCES veiculos (id));";
 

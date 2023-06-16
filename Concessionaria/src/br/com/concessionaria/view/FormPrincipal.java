@@ -111,6 +111,15 @@ public class FormPrincipal extends JFrame {
 		geralPanel.add(servicosPanel, "servicos");
 		servicosPanel.setLayout(null);
 		servicosPanel.setVisible(false);
+		
+		/*
+		 * Painel de Ordens de Serviços
+		 */
+		FormOS osPanel = new FormOS();
+		osPanel.setBounds(10, 11, 1004, 485);
+		geralPanel.add(osPanel, "ordemServico");
+		osPanel.setLayout(null);
+		osPanel.setVisible(true);
 
 		/*
 		 * Painel de clientes
@@ -148,6 +157,14 @@ public class FormPrincipal extends JFrame {
 			}
 		});
 		mnCadastro.add(mnItemColaboradores);
+		
+		JMenuItem mnItemOS = new JMenuItem("Ordens de Serviços");
+		mnItemOS.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(geralPanel, "ordemServico");
+			}
+		});
+		mnCadastro.add(mnItemOS);
 
 		JMenuItem mnItemServicos = new JMenuItem("Serviços");
 		mnItemServicos.addActionListener(new ActionListener() {
