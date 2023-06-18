@@ -2,7 +2,7 @@ package br.com.concessionaria.dao;
 
 import java.sql.*;
 
-public class TableVeiculos {
+public class CreateDatabase {
 
 	public static void main(String[] args) {
 		Connection con = null;
