@@ -45,7 +45,7 @@ public class FormVendas extends JPanel {
 	public FormVendas() {
 		setToolTipText("");
 		setLayout(null);
-		setBounds(10, 11, 1004, 485);
+		setBounds(10, 11, 1113, 513);
 
 		JLabel lblCadVendas = new JLabel("VENDAS");
 		lblCadVendas.setHorizontalAlignment(SwingConstants.CENTER);
@@ -76,17 +76,17 @@ public class FormVendas extends JPanel {
 		add(lblColaborador);
 
 		cmbColaborador = new JComboBox<>();
-		cmbColaborador.setBounds(112, 226, 429, 22);
+		cmbColaborador.setBounds(112, 226, 216, 22);
 		this.add(cmbColaborador);
 		this.preencheCmbColaborador();
 
 		cmbCliente = new JComboBox<>();
-		cmbCliente.setBounds(112, 181, 160, 22);
+		cmbCliente.setBounds(112, 181, 216, 22);
 		this.add(cmbCliente);
 		this.preencheCmbCliente();
 
 		cmbVeiculo = new JComboBox<>();
-		cmbVeiculo.setBounds(112, 129, 160, 22);
+		cmbVeiculo.setBounds(112, 129, 216, 22);
 		this.add(cmbVeiculo);
 		this.preencheCmbVeiculo();
 
@@ -101,7 +101,7 @@ public class FormVendas extends JPanel {
 				preencheCmbVeiculo();
 			}
 		});
-		btnAtualizar.setBounds(275, 386, 110, 23);
+		btnAtualizar.setBounds(155, 352, 110, 23);
 		add(btnAtualizar);
 
 		btnCadastrar = new JButton("CADASTRAR");
