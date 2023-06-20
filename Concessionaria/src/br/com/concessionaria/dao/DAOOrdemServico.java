@@ -3,11 +3,20 @@ package br.com.concessionaria.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import br.com.concessionaria.model.Cliente;
+import br.com.concessionaria.model.Colaborador;
 import br.com.concessionaria.model.OrdemServico;
+import br.com.concessionaria.model.Servico;
+import br.com.concessionaria.model.Veiculo;
+import br.com.concessionaria.utils.Services;
+import br.com.concessionaria.view.FormOS;
 
 public class DAOOrdemServico {
 	
@@ -42,6 +51,88 @@ public class DAOOrdemServico {
 			e.printStackTrace();
 			con.close();
 		}
+	}
+	
+	/*
+	 * Pesquisar
+	 */
+	public static void pesquisarOS() {
+		Connection con = null;
+		Statement stmt = null;
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM ordens_servicos WHERE id =" + FormOS.txtIdOS.getText() + ";");
+
+			boolean os = rs.next();
+
+			if (!os) {
+				Services.limparCampos(FormOS.class);
+				
+				throw new Exception();
+			} else {				
+				FormOS.btnCadastrar.setEnabled(false);
+			}
+
+			while (os) {
+				Integer idOS = rs.getInt("id");
+				double valorTotal = rs.getDouble("valor_os");
+
+				FormOS.txtIdOS.setText(Integer.toString(idOS));
+				FormOS.servicoRs.setText(Servico.getIdServico() + " - " + Servico.getNome());
+				FormOS.pesquisaCliente.setText(Cliente.getIdCliente() + " - " + Cliente.getNome());
+				FormOS.pesquisaColaborador.setText(Colaborador.getIdColaborador() + " - " + Colaborador.getNome());
+				FormOS.pesquisaVeiculo.setText(Veiculo.getIdVeiculo() + " - " + Veiculo.getModelo());
+				FormOS.pesquisaValor.setText(Double.toString(valorTotal));
+
+				os = false;
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Dialog", JOptionPane.ERROR_MESSAGE);
+
+		}
+	}
+	
+	/*
+	 * Deletar OS
+	 */
+	public static void deletarOS() {
+		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o registro?", "Confirmar",
+				JOptionPane.YES_NO_OPTION);
+
+		if (response == JOptionPane.NO_OPTION) {
+			JOptionPane.getDefaultLocale();
+		} else if (response == JOptionPane.YES_OPTION) {
+			Connection con = null;
+			Statement stmt = null;
+			try {
+				Class.forName("org.sqlite.JDBC");
+				con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+				con.setAutoCommit(false);
+				stmt = con.createStatement();
+				String query = "DELETE from ordens_servicos WHERE id =" + FormOS.txtIdOS.getText() + ";";
+				stmt.executeUpdate(query);
+				con.commit();
+				stmt.close();
+				con.close();
+
+				Services.limparCampos(FormOS.class);
+				JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Atenção",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
 	}
 
 }

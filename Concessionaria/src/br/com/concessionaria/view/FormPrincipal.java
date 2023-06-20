@@ -24,6 +24,10 @@ public class FormPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	public static JMenuBar menuBar;
+	public static JMenu mnRelatorio;
+	public static JMenu mnBackup;
+	
 
 	/**
 	 * Launch the application.
@@ -49,22 +53,22 @@ public class FormPrincipal extends JFrame {
 	public FormPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1040, 564);
-
+		
 		/*
 		 * Menu bar itens
 		 */
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
 		JMenu mnCadastro = new JMenu("Cadastro");
 		mnCadastro.setPreferredSize(new Dimension(90, 26));
 		menuBar.add(mnCadastro);
 
-		JMenu mnRelatorio = new JMenu("Relatório");
+		mnRelatorio = new JMenu("Relatório");
 		mnRelatorio.setPreferredSize(new Dimension(90, 26));
 		menuBar.add(mnRelatorio);
 
-		JMenu mnBackup = new JMenu("Backup");
+		mnBackup = new JMenu("Backup");
 		mnBackup.setPreferredSize(new Dimension(90, 26));
 		menuBar.add(mnBackup);
 

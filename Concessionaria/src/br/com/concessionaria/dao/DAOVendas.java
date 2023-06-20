@@ -18,7 +18,7 @@ import br.com.concessionaria.utils.Services;
 import br.com.concessionaria.view.FormVendas;
 
 public class DAOVendas {
-	
+
 	/*
 	 * Cadastrar
 	 */
@@ -30,12 +30,12 @@ public class DAOVendas {
 			con.setAutoCommit(false);
 			String insertVendaQuery = "INSERT INTO vendas (id, cliente, colaborador, veiculo, valor_total) "
 					+ "VALUES (NULL, ?, ?, ?, ?)";
-			
+
 			PreparedStatement insertVendaStmt = con.prepareStatement(insertVendaQuery);
 			insertVendaStmt.setInt(1, Venda.getClienteSelecionado().getIdCliente());
 			insertVendaStmt.setInt(2, Venda.getColaboradorSelecionado().getIdColaborador());
 			insertVendaStmt.setInt(3, Venda.getVeiculoSelecionado().getIdVeiculo());
-			insertVendaStmt.setDouble(4,Venda.getValorTotal());
+			insertVendaStmt.setDouble(4, Venda.getValorTotal());
 			insertVendaStmt.execute();
 			insertVendaStmt.close();
 			con.commit();
@@ -50,57 +50,94 @@ public class DAOVendas {
 			con.close();
 		}
 	}
-	
+
 	/*
 	 * Pesquisar
 	 */
-//	public static void pesquisarVenda() {
-//		Connection con = null;
-//		Statement stmt = null;
-//		
-//		try {
-//			Class.forName("org.sqlite.JDBC");
-//			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
-//			con.setAutoCommit(false);
-//			stmt = con.createStatement();
-//			ResultSet rs = stmt.executeQuery(
-//					"SELECT * FROM vendas WHERE id =" + FormVendas.txtIdVenda.getText() + ";");
-//
-//			boolean venda = rs.next();
-//
-//			if (!venda) {
-//				Services.limparCampos(FormVendas.class);
-//
-//				throw new Exception();
-//			} else {
-//				FormVendas.btnCadastrar.setEnabled(false);
-//			}
-//			
-//			while (venda) {
-//				Integer idVenda = rs.getInt("id");
-//				String cliente = rs.getString("cliente");
-//				String colaborador = rs.getString("colaborador");
-//				String veiculo = rs.getString("veiculo");
-//				double valorTotal = rs.getDouble("valor_total");
-//
-//				FormVendas.txtIdVenda.setText(Integer.toString(idVenda));
-//				FormVendas.cmbCliente.setSelectedItem(Cliente.getIdCliente() + " - " + Cliente.getNome());
-//				FormVendas.cmbColaborador.setSelectedItem(Colaborador.getIdColaborador() + " - " + Colaborador.getNome());
-//				FormVendas.cmbVeiculo.setSelectedItem(Veiculo.getIdVeiculo() + " - " + Veiculo.getModelo());
-//				FormVendas.txtValorTotal.setText(Double.toString(valorTotal));
-//
-//				venda = false;
-//			}
-//			rs.close();
-//			stmt.close();
-//			con.close();
-//						
-//		}catch (Exception e) {
-//			JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Dialog", JOptionPane.ERROR_MESSAGE);
-//
-//		}
-//	}
+	public static void pesquisarVenda() {
+		Connection con = null;
+		Statement stmt = null;
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM vendas WHERE cliente =" + buscarClienteCpf() + ";");
+
+			boolean venda = rs.next();
+
+			if (!venda) {
+				Services.limparCampos(FormVendas.class);
+
+			} else {
+				FormVendas.btnCadastrar.setEnabled(false);
+			}
+
+			while (venda) {
+				Integer idVenda = rs.getInt("id");
+				String cliente = rs.getString("cliente");
+				String colaborador = rs.getString("colaborador");
+				String veiculo = rs.getString("veiculo");
+				double valorTotal = rs.getDouble("valor_total");
+
+				FormVendas.txtIdVenda.setText(Integer.toString(idVenda));
+				FormVendas.pesquisaCliente.setText(Cliente.getIdCliente() + " - " + Cliente.getNome());
+				FormVendas.pesquisaColaborador.setText(Colaborador.getIdColaborador() + " - " + Colaborador.getNome());
+				FormVendas.pesquisaVeiculo.setText(Veiculo.getIdVeiculo() + " - " + Veiculo.getModelo());
+				FormVendas.pesquisaValor.setText(Double.toString(valorTotal));
+
+				venda = false;
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Dialog", JOptionPane.ERROR_MESSAGE);
+
+		}
+	}
+
+	public static int buscarClienteCpf() {
+		Connection con = null;
+		Statement stmt = null;
+		int idCliente = 0;
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+			con = DriverManager.getConnection("jdbc:sqlite:src/br/com/concessionaria/dao/concessionaria.db");
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT id FROM clientes WHERE cpf ='" + FormVendas.pesquisaCpf.getText() + "';");
+
+			boolean cliente = rs.next();
+
+			if (!cliente) {
+
+				throw new Exception();
+			} else {
+				idCliente = rs.getInt("id");	
+				
+				FormVendas.btnCadastrar.setEnabled(false);
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(new JFrame(), "Registro inexistente", "Dialog", JOptionPane.ERROR_MESSAGE);
+
+		}
+		return idCliente;
+	}
 	
+	/*
+	 * Deletar venda
+	 */
 	public static void deletarVenda() {
 		int response = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar o registro?", "Confirmar",
 				JOptionPane.YES_NO_OPTION);

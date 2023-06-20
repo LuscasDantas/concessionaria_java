@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
+import br.com.concessionaria.dao.DAOOrdemServico;
 import br.com.concessionaria.model.Cliente;
 import br.com.concessionaria.model.Servico;
 import br.com.concessionaria.model.Veiculo;
@@ -40,6 +41,12 @@ public class FormOS extends JPanel {
 	public static JComboBox<String> cmbVeiculo;
 	public static JComboBox<String> cmbServico;
 	public static JComboBox<String> cmbColaborador;
+	public static JTextField pesquisaPlaca;
+	public static JTextField pesquisaValor;
+	public static JTextField servicoRs;
+	public static JTextField pesquisaCliente;
+	public static JTextField pesquisaColaborador;
+	public static JTextField pesquisaVeiculo;
 	
 
 	/**
@@ -135,14 +142,14 @@ public class FormOS extends JPanel {
 		btnCadastrar.setBounds(35, 396, 110, 23);
 		this.add(btnCadastrar);
 		
-//		btnPesquisar = new JButton("PESQUISAR");
-//		btnPesquisar.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				DAOVendas.pesquisarVenda();
-//			}
-//		});
-//		btnPesquisar.setBounds(275, 352, 110, 23);
-//		this.add(btnPesquisar);
+		btnPesquisar = new JButton("PESQUISAR");
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOOrdemServico.pesquisarOS();				
+			}
+		});
+		btnPesquisar.setBounds(775, 430, 110, 23);
+		this.add(btnPesquisar);
 
 
 		JButton btnLimpar = new JButton("LIMPAR");
@@ -163,11 +170,61 @@ public class FormOS extends JPanel {
 		btnDeletar.setBackground(new Color(255, 0, 0));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//DAOVendas.deletarVenda();
+				DAOOrdemServico.deletarOS();
 			}
 		});
 		btnDeletar.setBounds(155, 430, 110, 23);
 		this.add(btnDeletar);
+		
+		JLabel lblPesquisa = new JLabel("PESQUISA");
+		lblPesquisa.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPesquisa.setBounds(581, 113, 216, 25);
+		add(lblPesquisa);
+		
+		JLabel lblServicoOS_1 = new JLabel("Serviço:");
+		lblServicoOS_1.setBounds(515, 217, 46, 14);
+		add(lblServicoOS_1);
+		
+		JLabel lblClienteOS_1 = new JLabel("Cliente:");
+		lblClienteOS_1.setBounds(516, 261, 46, 14);
+		add(lblClienteOS_1);
+		
+		JLabel lblColaboradorOS_1 = new JLabel("Colaborador:");
+		lblColaboradorOS_1.setBounds(515, 302, 77, 14);
+		add(lblColaboradorOS_1);
+		
+		JLabel lblVeiculoOS_1 = new JLabel("Veículo:");
+		lblVeiculoOS_1.setBounds(515, 350, 46, 14);
+		add(lblVeiculoOS_1);
+		
+		JLabel lblValorOS_1 = new JLabel("Valor Total:");
+		lblValorOS_1.setBounds(515, 400, 77, 14);
+		add(lblValorOS_1);
+		
+		pesquisaValor = new JTextField();
+		pesquisaValor.setColumns(10);
+		pesquisaValor.setBounds(635, 396, 130, 22);
+		add(pesquisaValor);
+		
+		servicoRs = new JTextField();
+		servicoRs.setBounds(635, 214, 250, 20);
+		add(servicoRs);
+		servicoRs.setColumns(10);
+		
+		pesquisaCliente = new JTextField();
+		pesquisaCliente.setColumns(10);
+		pesquisaCliente.setBounds(635, 258, 250, 20);
+		add(pesquisaCliente);
+		
+		pesquisaColaborador = new JTextField();
+		pesquisaColaborador.setColumns(10);
+		pesquisaColaborador.setBounds(635, 301, 250, 20);
+		add(pesquisaColaborador);
+		
+		pesquisaVeiculo = new JTextField();
+		pesquisaVeiculo.setColumns(10);
+		pesquisaVeiculo.setBounds(635, 347, 250, 20);
+		add(pesquisaVeiculo);
 
 	}
 	

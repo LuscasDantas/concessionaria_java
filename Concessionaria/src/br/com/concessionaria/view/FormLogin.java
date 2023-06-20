@@ -146,12 +146,15 @@ public class FormLogin extends JFrame {
 			FormPrincipal principal = new FormPrincipal();
 			principal.setVisible(true);
 			principal.setLocationRelativeTo(null);
+			principal.mnRelatorio.setVisible(false);
+			principal.mnBackup.setVisible(false);
 		}
 
 		else if (txtUserName.getText().equals("ADMIN") && (senhaout.equals(Corp))) {
 			FormPrincipal principal = new FormPrincipal();
 			principal.setVisible(true);
 			principal.setLocationRelativeTo(null);
+			
 		} else {
 			//System.out.println("Usuário ou senha errado!");
 			JOptionPane.showMessageDialog(null, "Usuário ou senha errado");
