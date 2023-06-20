@@ -23,6 +23,9 @@ import java.awt.CardLayout;
 public class FormPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 * comentario
+	 */
 	private JPanel contentPane;
 	public static JMenuBar menuBar;
 	public static JMenu mnRelatorio;
