@@ -102,7 +102,16 @@ public class FormPrincipal extends JFrame {
 		geralPanel.add(veiculosPanel, "veiculos");
 		veiculosPanel.setLayout(null);
 		veiculosPanel.setVisible(false);
-
+		
+		/*
+		 * Painel de relatórios
+		 */
+		FormRelatorios relatoriosPanel = new FormRelatorios();
+		relatoriosPanel.setBounds(10, 11, 1004, 485);
+		geralPanel.add(relatoriosPanel, "relatorios");
+		relatoriosPanel.setLayout(null);
+		relatoriosPanel.setVisible(false);
+		
 		/*
 		 * Painel de Serviços
 		 */
@@ -189,6 +198,18 @@ public class FormPrincipal extends JFrame {
 			}
 		});
 		mnCadastro.add(mnItemVendas);
+		
+		/*
+		 * Menu Relatórios Itens
+		 */
+		JMenuItem mnItemRelatorios = new JMenuItem("Relatórios");
+		mnItemRelatorios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(geralPanel, "relatorios");
+			}
+		});
+		mnRelatorio.add(mnItemRelatorios);
+		
 		
 		/*
 		 * Menu Backup Itens
