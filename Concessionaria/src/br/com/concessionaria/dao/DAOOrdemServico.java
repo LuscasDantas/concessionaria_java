@@ -80,17 +80,13 @@ public class DAOOrdemServico {
 
 			while (os) {
 				Integer idOS = rs.getInt("id");
-				String cliente = rs.getString("cliente");
-				String colaborador = rs.getString("colaborador");
-				String veiculo = rs.getString("veiculo");
-				String servico = rs.getString("servico");
-				double valorTotal = rs.getDouble("valor_total");
+				double valorTotal = rs.getDouble("valor_os");
 
 				FormOS.txtIdOS.setText(Integer.toString(idOS));
+				FormOS.servicoRs.setText(Servico.getIdServico() + " - " + Servico.getNome());
 				FormOS.pesquisaCliente.setText(Cliente.getIdCliente() + " - " + Cliente.getNome());
 				FormOS.pesquisaColaborador.setText(Colaborador.getIdColaborador() + " - " + Colaborador.getNome());
 				FormOS.pesquisaVeiculo.setText(Veiculo.getIdVeiculo() + " - " + Veiculo.getModelo());
-				FormOS.pesquisaServico.setText(Servico.getIdServico() + " - " + Servico.getNome());
 				FormOS.pesquisaValor.setText(Double.toString(valorTotal));
 
 				os = false;

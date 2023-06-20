@@ -43,7 +43,7 @@ public class FormOS extends JPanel {
 	public static JComboBox<String> cmbColaborador;
 	public static JTextField pesquisaPlaca;
 	public static JTextField pesquisaValor;
-	public static JTextField pesquisaServico;
+	public static JTextField servicoRs;
 	public static JTextField pesquisaCliente;
 	public static JTextField pesquisaColaborador;
 	public static JTextField pesquisaVeiculo;
@@ -181,16 +181,6 @@ public class FormOS extends JPanel {
 		lblPesquisa.setBounds(581, 113, 216, 25);
 		add(lblPesquisa);
 		
-		JLabel lblpesquisaPlaca = new JLabel("Pesquisar placa:");
-		lblpesquisaPlaca.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblpesquisaPlaca.setBounds(515, 173, 114, 14);
-		add(lblpesquisaPlaca);
-		
-		pesquisaPlaca = new JTextField();
-		pesquisaPlaca.setColumns(10);
-		pesquisaPlaca.setBounds(635, 170, 177, 20);
-		add(pesquisaPlaca);
-		
 		JLabel lblServicoOS_1 = new JLabel("Serviço:");
 		lblServicoOS_1.setBounds(515, 217, 46, 14);
 		add(lblServicoOS_1);
@@ -216,10 +206,10 @@ public class FormOS extends JPanel {
 		pesquisaValor.setBounds(635, 396, 130, 22);
 		add(pesquisaValor);
 		
-		pesquisaServico = new JTextField();
-		pesquisaServico.setBounds(635, 214, 250, 20);
-		add(pesquisaServico);
-		pesquisaServico.setColumns(10);
+		servicoRs = new JTextField();
+		servicoRs.setBounds(635, 214, 250, 20);
+		add(servicoRs);
+		servicoRs.setColumns(10);
 		
 		pesquisaCliente = new JTextField();
 		pesquisaCliente.setColumns(10);
