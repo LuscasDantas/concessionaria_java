@@ -23,6 +23,12 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
+import javax.swing.JList;
+import javax.swing.JInternalFrame;
+import javax.swing.Box;
 
 public class FormVendas extends JPanel {
 
@@ -38,6 +44,12 @@ public class FormVendas extends JPanel {
 	public static JComboBox<String> cmbCliente;
 	public static JComboBox<String> cmbVeiculo;
 	public static JComboBox<String> cmbColaborador;
+	public static JTable tableVendas;
+	public static JTextField pesquisaVeiculo;
+	public static JTextField pesquisaCliente;
+	public static JTextField pesquisaColaborador;
+	public static JTextField pesquisaValor;
+	public static JTextField pesquisaCpf;
 
 	/**
 	 * Create the panel.
@@ -113,14 +125,15 @@ public class FormVendas extends JPanel {
 		btnCadastrar.setBounds(35, 352, 110, 23);
 		this.add(btnCadastrar);
 		
-//		btnPesquisar = new JButton("PESQUISAR");
-//		btnPesquisar.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				DAOVendas.pesquisarVenda();
-//			}
-//		});
-//		btnPesquisar.setBounds(275, 352, 110, 23);
-//		this.add(btnPesquisar);
+		btnPesquisar = new JButton("PESQUISAR");
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DAOVendas.pesquisarVenda();
+				
+			}
+		});
+		btnPesquisar.setBounds(740, 414, 110, 23);
+		this.add(btnPesquisar);
 
 
 		JButton btnLimpar = new JButton("LIMPAR");
@@ -136,8 +149,8 @@ public class FormVendas extends JPanel {
 		btnLimpar.setBounds(34, 386, 110, 23);
 		this.add(btnLimpar);
 		
-		JLabel lblValorTotal = new JLabel("Valor Total");
-		lblValorTotal.setBounds(34, 273, 62, 14);
+		JLabel lblValorTotal = new JLabel("Valor Total:");
+		lblValorTotal.setBounds(34, 273, 77, 14);
 		add(lblValorTotal);
 		
 		txtValorTotal = new JTextField();
@@ -154,6 +167,57 @@ public class FormVendas extends JPanel {
 		});
 		btnDeletar.setBounds(155, 386, 110, 23);
 		this.add(btnDeletar);
+		
+		pesquisaVeiculo = new JTextField();
+		pesquisaVeiculo.setBounds(650, 217, 200, 20);
+		add(pesquisaVeiculo);
+		pesquisaVeiculo.setColumns(10);
+		
+		JLabel lblVeiculoVenda_1 = new JLabel("Veículo:");
+		lblVeiculoVenda_1.setBounds(565, 218, 46, 14);
+		add(lblVeiculoVenda_1);
+		
+		JLabel lblClienteVenda_1 = new JLabel("Cliente:");
+		lblClienteVenda_1.setBounds(564, 270, 46, 14);
+		add(lblClienteVenda_1);
+		
+		JLabel lblColaborador_1 = new JLabel("Colaborador:");
+		lblColaborador_1.setBounds(564, 315, 77, 14);
+		add(lblColaborador_1);
+		
+		JLabel lblValorTotal_2 = new JLabel("Valor Total:");
+		lblValorTotal_2.setBounds(564, 358, 77, 14);
+		add(lblValorTotal_2);
+		
+		pesquisaCliente = new JTextField();
+		pesquisaCliente.setColumns(10);
+		pesquisaCliente.setBounds(650, 269, 200, 20);
+		add(pesquisaCliente);
+		
+		pesquisaColaborador = new JTextField();
+		pesquisaColaborador.setColumns(10);
+		pesquisaColaborador.setBounds(650, 314, 200, 20);
+		add(pesquisaColaborador);
+		
+		pesquisaValor = new JTextField();
+		pesquisaValor.setColumns(10);
+		pesquisaValor.setBounds(650, 357, 200, 20);
+		add(pesquisaValor);
+		
+		JLabel lblPesquisa = new JLabel("PESQUISA");
+		lblPesquisa.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPesquisa.setBounds(619, 98, 216, 25);
+		add(lblPesquisa);
+		
+		JLabel lblpesquisaCpf = new JLabel("Pesquisar CPF:");
+		lblpesquisaCpf.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblpesquisaCpf.setBounds(565, 164, 100, 14);
+		add(lblpesquisaCpf);
+		
+		pesquisaCpf = new JTextField();
+		pesquisaCpf.setColumns(10);
+		pesquisaCpf.setBounds(673, 164, 177, 20);
+		add(pesquisaCpf);
 
 	}
 
@@ -275,5 +339,4 @@ public class FormVendas extends JPanel {
 			e.printStackTrace();
 		}
 	}
-
 }
